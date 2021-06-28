@@ -1,0 +1,37 @@
+<a href="/createpost"><button type="button" class="btn btn-primary btn-block">Create post</button></a>
+<%- include('partials/messages'); %>
+<% newPost.forEach(newPost => { %>
+    <div class="card mt-4">
+        <div class="card-body">
+			<% if (newPost.likeCount == null) { %>
+				<p style="float: right">0 votes</p>
+
+			<% } else { %>
+			<p style="float: right"><%= newPost.likeCount %> votes</p>
+			<% }%>
+            <h4 class="card-title"><%= newPost.postTitle %></h4>
+			<a href="/users/profiles/<%= newPost.postUsername %>"><p><%= newPost.postUsername %></p></a>
+            <div class="card-subtitle text-muted mb-2">
+                <%= newPost.date.toLocaleDateString() %>
+            </div>
+            <div class="card-text mb-2">
+                <%= newPost.postText %>
+            </div>
+            <a href="/forum/<%= newPost.id%>" class="btn btn-primary">Read more</a>
+			<% if (login) { %>
+				<% if (newPost.postUsername == newProfile.username) { %>
+					<a href="/editpost/<%= newPost.id%>"><button type="button" class="btn btn-info">Edit</button></a>
+					<form action="/forum/<%= newPost.id %>?_method=POST" method="POST" class="d-inline">
+					<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
+				<% }%>
+				<form action="/forum/<%= newPost.id %>/dislike?_method=POST" method="POST" class="d-inline">
+					<button type="submit" class="btn btn-warning" style="float: right;">Dislike</button>
+				</form>
+				<form action="/forum/<%= newPost.id %>/like?_method=POST" method="POST" class="d-inline">
+					<button type="submit" class="btn btn-success" style="float: right;">Like</button>
+				</form>
+			<% }%>
+        </div>
+    </div>
+<% }) %>

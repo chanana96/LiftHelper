@@ -1,0 +1,122 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<%- include('partials/messages'); %>
+		  <form name="wilkscalc" action="/wilkscalculator" method="POST">
+			<div class="form-group">
+				<input
+					type="radio"
+					name="gender"
+					id="gender"
+					value="male"
+				><label for="male">Male</label><br>
+				<input
+					type="radio"
+					name="gender"
+					id="gender"
+					value="female"
+				><label for="female">Female</label><br>
+				<label for="weight">Your bodyweight</label>
+				<input
+					type="number"
+					name="weight"
+					id="weight"
+					class="form-control"
+					placeholder="Your bodyweight in KG"
+				>
+				<label for="squat">Your Squat</label>
+				<input
+					type="number"
+					name="squat"
+					id="squat"
+					class="form-control"
+					placeholder="Your 1RM for Back Squat in KG"
+				>
+				<label for="bench">Your Bench Press</label>
+				<input
+					type="number"
+					name="bench"
+					id="bench"
+					class="form-control"
+					placeholder="Your 1RM for Bench Press in KG"
+				>
+				<label for="deadlift">Your Deadlift</label>
+				<input
+					type="number"
+					name="deadlift"
+					id="deadlift"
+					class="form-control"
+					placeholder="Your 1RM for Deadlift in KG"
+				>
+			</div>
+			<button type="button" class="btn btn-primary btn-block" onclick="values()">Submit</button>
+			<label for="wilks">Your Wilks score</label>
+			<input 
+				type="number"
+				name="wilks"
+				id="wilks"
+				class="form-control"
+				readonly
+			>
+			<label for="total">Your Total</label>
+			<input 
+				type="total"
+				name="total"
+				id="total"
+				class="form-control"
+				readonly
+			>
+			<button type="submit" class="btn btn-primary btn-block">Save your Wilks score and total</button>
+		</form>
+		</div>
+	</div>
+</div>
+
+<p style="text-align: center">This calculator uses the <a target="_blank" href="https://en.wikipedia.org/wiki/Wilks_coefficient">Wilks formula</a> to calculate your Wilks score 
+after being given your weight and lifts.</p>
+
+<script type="text/javascript">
+	function values(){
+
+		var coefficient
+		var Weight = (document.wilkscalc.weight.value) 
+		var Squat = (document.wilkscalc.squat.value)
+		var Bench = (document.wilkscalc.bench.value)
+		var Deadlift = (document.wilkscalc.deadlift.value)
+		var Gender = (document.wilkscalc.gender.value)
+
+		var am = -216.0475144
+		var bm = 16.2606339
+		var cm = -0.002388645
+		var dm = -0.00113732
+		var em = 7.01863 * Math.pow(10, -6)
+		var fm = -1.291 * Math.pow(10, -8)
+
+		var c2 = Math.pow(Weight, 2)
+		var d3 = Math.pow(Weight, 3)
+		var e4 = Math.pow(Weight, 4)
+		var f5 = Math.pow(Weight, 5)
+
+		var af = 594.31747775582
+		var bf = -27.23842536447
+		var cf = 0.82112226871
+		var df = -0.00930733913
+		var ef = 4.731582 * Math.pow(10, -5)
+		var ff = -9.054 * Math.pow(10, -8)
+
+
+
+		if (Gender == "male"){
+			coefficient =  500 / (am + (bm*Weight) + (cm*c2) + (dm*d3) + (em*e4) + (fm*f5))
+		}
+		else {
+			coefficient = 500 / (af + (bf*Weight) + (cf*c2) + (df*d3) + (ef*e4) + (ff*f5))
+		}
+
+		Total = (+Squat + +Bench + +Deadlift)
+		Wilks=(Total*coefficient).toFixed(2)
+
+		document.wilkscalc.wilks.value = Wilks
+		document.wilkscalc.total.value = Total + " KG"
+		}
+</script>

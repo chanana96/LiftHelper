@@ -1,0 +1,41 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<%- include('partials/messages'); %>
+		  <form name="ibwcalc">
+			<div class="form-group">
+				<label for="height">Height</label>
+				<input
+					type="height"
+					name="height"
+					id="height"
+					class="form-control"
+					placeholder="What is your height?"
+				>
+			</div>
+			<button type="button" class="btn btn-primary btn-block" onclick="values()">Submit</button>
+			<label for="result">Your ideal bodyweight at 5-6% bodyfat</label>
+			<input 
+				type="result"
+				name="result"
+				id="result"
+				class="form-control"
+				readonly
+			>
+		</form>
+		</div>
+	</div>
+</div>
+
+<p style="text-align: center">This calculator uses the <a target="_blank" href="https://www.elitenutritioncoaching.com/articles/2012/08/29/what-is-my-natural-muscular-potential-part-1#:~:text=The%20Martin%20Berkhan%20model%20for%20maximum%20muscular%20development&text=The%20formula%20is%20as%20follows,kg%20(176%20lbs.).">
+	Martin Berkhan formula</a> to calculate your maximum muscular potential at 5-6% bodyfat.</p>
+
+<script type="text/javascript">
+	function values(){
+		var Height
+		Height = (document.ibwcalc.height.value)
+			Result = (Height - 100 + " kg")
+			document.ibwcalc.result.value=Result
+
+		}
+</script>

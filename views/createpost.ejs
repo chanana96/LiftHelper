@@ -1,0 +1,31 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<h1 class="text-center mb-3"> Create a post
+      </h1>
+	  <%- include('partials/messages'); %>
+<form action="/createpost" method="POST">
+<div class="form-group">
+	<label for="title">Title</label>
+	<input required
+		type="text"
+		name="title"
+		id="title"
+		class="form-control"
+		placeholder="Story of my cat"
+		value="<%= typeof title != 'undefined' ? title : '' %>"
+	>
+	<label for="text">Text</label>
+	<textarea required style="height:200px;"
+		type="text"
+		name="text"
+		id="text"
+		class="form-control"
+		value="<%= typeof text != 'undefined' ? text : '' %>"
+		placeholder="Today my cat stole my car and ruined my marriage"></textarea>
+</div>
+<button type="submit" class="btn btn-primary btn-block">Submit</button>
+</form>
+</div>
+</div>
+</div>

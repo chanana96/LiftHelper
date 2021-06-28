@@ -1,0 +1,59 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<%- include('partials/messages'); %>
+		  <form name="onermcalc" action="/onerepmaxcalculator" method="POST">
+			<div class="form-group">
+				<label for="lift">Lift weight</label>
+				<input
+					type="lift"
+					name="lift"
+					id="lift"
+					class="form-control"
+					placeholder="Lift weight in KG"
+				>
+				<label for="reps">Repetitions</label>
+				<input
+					type="reps"
+					name="reps"
+					id="reps"
+					class="form-control"
+					placeholder="How many reps can you do with this weight?"
+				>
+			</div>
+			<button type="button" class="btn btn-primary btn-block" onclick="values()">Submit</button>
+			<label for="result">Your one rep max</label>
+			<input 
+				type="result"
+				name="result"
+				id="result"
+				class="form-control"
+				readonly
+			>
+			<label for ="compound">Select which lift</label>
+				<select id="compound" name="compound">
+					<option value="Bench Press">Bench Press</option>
+					<option value="Deadlift">Deadlift</option>
+					<option value="Overhead Press">Overhead Press</option>
+					<option value="Squat">Squat</option>
+				</select>
+			<button type="submit" class="btn btn-primary btn-block">Save your 1RM</button>
+		</form>
+		</div>
+	</div>
+</div>
+
+<p style="text-align: center">This calculator uses the <a target="_blank" href="https://en.wikipedia.org/wiki/One-repetition_maximum">Epley formula</a> to calculate your one repetition
+	maximum for the given lift and repetitions.</p>
+
+<script type="text/javascript">
+	function values(){
+		var Lift, Reps
+		Lift = (document.onermcalc.lift.value)
+		Reps = (document.onermcalc.reps.value)
+		
+			Result=Math.round(Lift*(1+(Reps/30)))
+			document.onermcalc.result.value=Result
+
+		}
+</script>

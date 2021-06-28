@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<title>LiftHelper</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<% if (login) { %>
+			<a class="navbar-brand" href="/dashboard/">LiftHelper</a>
+		<% } else { %>
+			<a class="navbar-brand" href="/">LiftHelper</a>
+		<% }%>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+	  
+		<div class="collapse navbar-collapse" id="navbarColor01">
+		  <ul class="navbar-nav mr-auto">
+			  <a class="nav-link" href="/">Home
+			  </a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/muscles/routines/routines">Routines</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/forum">Forum</a>
+			  </li>
+			<li class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Calculators</a>
+			  <div class="dropdown-menu">
+				<a class="dropdown-item" href="/tdeecalculator">Calorie maintenance calculator</a>
+				<a class="dropdown-item" href="/onerepmaxcalculator">1 rep max calculator</a>
+				<a class="dropdown-item" href="/ibwcalculator">Ideal bodyweight calculator</a>
+				<a class="dropdown-item" href="/wilkscalculator">Wilks score calculator</a>
+			  </div>
+			</li>
+		  </ul> 
+		  <ul class="nav navbar-nav ml-auto">
+			<% if (login) { %>
+				<%if (newProfile.img != null) { %>
+				<img src="/public/uploads/images/<%= newProfile.img %>" width="55" height="55" style="border-radius: 10px">
+				<li class="nav-item">	
+					<a class="nav-link" href="/users/profile/<%= newProfile.id%>"><span class="fas fa-user"></span> Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/logout"><span class="fas fa-sign-in-alt"></span> Logout</a>
+				</li>
+				<% } else { %>
+					<img src="/public/uploads/images/placeholder.png" width="55" height="55" style="border-radius: 10px">
+					<li class="nav-item">	
+						<a class="nav-link" href="/users/profile/<%= newProfile.id%>"><span class="fas fa-user"></span> Profile</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/users/logout"><span class="fas fa-sign-in-alt"></span> Logout</a>
+					</li>
+				<% }%>
+			<% } else { %>
+				<li class="nav-item">	
+					<a class="nav-link" href="/users/register"><span class="fas fa-user"></span> Sign Up</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/login"><span class="fas fa-sign-in-alt"></span> Login</a>
+				</li>
+			<% }%>
+		  </ul>
+		</div>
+	  </nav>
+
+
+	
+	<div class = "container">
+		<%- body %>	
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</body>
+</html>

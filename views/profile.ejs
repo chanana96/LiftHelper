@@ -1,0 +1,24 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<h1 class="text-center mb-3"><%= newProfile.username %></h1>
+		<%- include('partials/messages'); %>
+<img src="/public/uploads/images/<%= newProfile.img %>" width="125" height="125" style="border:2px solid black">
+<form action="/users/profile/<%= newProfile.id %>" method="POST" enctype="multipart/form-data">
+	<input type="file" name="image" id="image" class="form-control-file"> <button type="submit" class="btn-primary btn-sm">Upload</button>
+</form>
+<br>
+<p><%= newProfile.name %></p>
+<p><%= newProfile.gender %></p>
+<p><%= newProfile.age %> years old</p>
+<br>
+<p><b>Weight: </b> <%= newProfile.weight %> kg</p>
+<p><b>Height: </b> <%= newProfile.height %> cm</p>
+<p><b>Activity level: </b> <%= newProfile.activitylevel %></p>
+<p><b>Total Daily Energy Expenditure(TDEE): </b> <%= newProfile.tdeenumber %> calories</p>
+<p><b>1 rep max: </b> <%= newProfile.ormnumber %> kg</p>
+<br>
+<a href="/users/changepassword/">Change your password</a>
+</div>
+</div>
+</div>

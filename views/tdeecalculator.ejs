@@ -1,0 +1,132 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+	  <div class="card card-body">
+		<%- include('partials/messages'); %>
+		  <form name="tdeecalc" action="/tdeecalculator" method="POST">
+			<div class="form-group">
+				<input
+					type="radio"
+					name="gender"
+					id="gender"
+					value="male"
+				><label for="male">Male</label><br>
+				<input
+					type="radio"
+					name="gender"
+					id="gender"
+					value="female"
+				><label for="female">Female</label><br>
+				<label for="age">Age</label>
+				<input
+					type="age"
+					name="age"
+					id="age"
+					class="form-control"
+				>
+				<label for="height">Height</label>
+				<input
+					type="height"
+					name="height"
+					id="height"
+					class="form-control"
+					placeholder="Height in CM"
+				>
+				<label for="weight">Weight</label>
+				<input
+					type="weight"
+					name="weight"
+					id="weight"
+					class="form-control"
+					placeholder="Weight in KG"
+				><br>
+				<label for ="activity">Activity</label>
+				<select id="activity" name="activity">
+					<option value="sedentary">Sedentary</option>
+					<option value="light-exercise">Light exercise</option>
+					<option value="moderate-exercise">Moderate exercise</option>
+					<option value="heavy-exercise">Heavy exercise</option>
+					<option value="athlete">Athlete</option>
+				</select>
+			</div>
+			<button type="button" class="btn btn-primary btn-block" onclick="values()">Submit</button>
+			<label for="bmr">Basal Metabolic Rate</label>
+			<input 
+				type="bmr"
+				name="bmr"
+				id="bmr"
+				class="form-control"
+				readonly
+			>
+			<label for="tdee">Total Daily Energy Expenditure</label>
+			<input 
+				type="tdee"
+				name="tdee"
+				id="tdee"
+				class="form-control"
+				readonly
+			>
+			<button type="submit" class="btn btn-primary btn-block">Save your TDEE</button>
+		</form>
+		</div>
+	</div>
+</div>
+
+
+<p style="text-align: center">This calculator uses the <a target="_blank" href="https://blog.nasm.org/nutrition/resting-metabolic-rate-how-to-calculate-and-improve-yours#:~:text=The%20Mifflin%2DSt%20Jeor%20formula,%C3%97%20age%20in%20years)%20%2D%20161">
+Mifflin St. Jeor formula</a> to calculate your Basal Metabolic Rate(BMR) which is used to determine how many calories you burn each day without doing anything. A <a target="_blank"
+a href="https://www.k-state.edu/paccats/Contents/PA/PDF/Physical%20Activity%20and%20Controlling%20Weight.pdf">multiplier</a> is used to determine how many calories you burn each day
+depending on your activity level.</p>
+
+<script type="text/javascript">
+	function values(){
+		var Gender, Age, Height, Weight, Activity
+		Gender=(document.tdeecalc.gender.value);
+		Age=(document.tdeecalc.age.value);
+		Height=(document.tdeecalc.height.value);
+		Weight=(document.tdeecalc.weight.value);
+		Activity=(document.tdeecalc.activity.value);
+		
+		if(Gender=='male'){
+			Bmr=(10*Weight)+(6.25*Height)-(5*Age)+5
+			document.tdeecalc.bmr.value=Bmr
+
+			if(Activity=='sedentary'){
+				Tdee=Bmr*1.2
+			}
+			else if(Activity=='light-exercise'){
+				Tdee=Bmr*1.375
+			}
+			else if(Activity=='moderate-exercise'){
+				Tdee=Bmr*1.55
+			}
+			else if(Activity=='heavy-exercise'){
+				Tdee=Bmr*1.725
+			}
+			else if(Activity=='athlete'){
+				Tdee=Bmr*1.9
+			}
+			document.tdeecalc.tdee.value=Tdee
+		}
+		else{
+			Bmr=(10*Weight)+(6.25*Height)-(5*Age)-161
+			document.tdeecalc.bmr.value=Bmr
+
+			if(Activity=='sedentary'){
+				Tdee=Bmr*1.2
+			}
+			else if(Activity=='light-exercise'){
+				Tdee=Bmr*1.375
+			}
+			else if(Activity=='moderate-exercise'){
+				Tdee=Bmr*1.55
+			}
+			else if(Activity=='heavy-exercise'){
+				Tdee=Bmr*1.725
+			}
+			else if(Activity=='athlete'){
+				Tdee=Bmr*1.9
+			}
+			document.tdeecalc.tdee.value=Tdee
+		}
+	}
+</script>
