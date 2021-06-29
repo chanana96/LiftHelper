@@ -1,5 +1,57 @@
 <h1><%= newPost.postTitle %></h1>
+<p>Posted by <%= newPost.postUsername %> </p>
 <br>
 <%= newPost.postText %>
 <br>
 <%= newPost.date %>
+
+<%- include('partials/messages'); %>
+<div class="card mt-4">
+	<div class="card-body">
+<% comment.forEach(comment => { %>
+	<div class="card mt-4 text-white bg-dark mb-3">
+        <div class="card-body">
+			<a href="/users/profiles/<%= comment.author %>"><p><%= comment.author %></p></a>
+            <div class="card-subtitle text-muted mb-2">
+                <%= comment.commentDate %>
+            </div>
+            <div class="card-text mb-2">
+                <%= comment.text %>
+            </div>
+        </div>
+    </div>
+<% }) %>
+
+<% if (login) { %>
+	<div class="row mt-5">
+		<div class="col-md-10 m-auto">
+		<div class="card card-body">
+			<h1 class="text-center mb-1"> Comment
+		</h1>
+	<form action="/forum/<%= newPost.id%>/comment?_method=POST" method="POST">
+	<div class="form-group">
+		<label for="text">Text</label>
+		<textarea required style="height:100px;"
+			type="text"
+			name="text"
+			id="text"
+			class="form-control"
+			value="<%= typeof text != 'undefined' ? text : '' %>"
+			placeholder="Well I think your cat had it's reasons"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</form>
+	</div>
+	</div>
+	</div>
+<% } else { %>
+	<div class="row mt-5">
+		<div class="col-md-10 m-auto">
+		<div class="card card-body">
+			<h1 class="text-center mb-1"> <a href="/users/login">Log in to comment!</a>
+		</h1>
+	</form>
+	</div>
+	</div>
+	</div>
+<% }%>

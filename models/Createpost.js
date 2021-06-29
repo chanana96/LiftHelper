@@ -20,7 +20,21 @@ const CreatepostSchema = new mongoose.Schema({
 	likeCount: {
 		type: Number,
 		required: false
-	}
+	},
+	comments: [
+		{
+			author:{
+				type: String
+			},
+			text:{
+				type: String
+			},
+			commentDate:{
+				type: Date,
+				default: Date.now
+			}
+		}
+	]
 })
 
 const Createpost = mongoose.model('Createpost', CreatepostSchema);

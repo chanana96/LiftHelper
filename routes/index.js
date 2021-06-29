@@ -21,9 +21,9 @@ router.get('/dashboard', ensureAuthenticated, (req,res)=> {
     res.render('dashboard', {login: req.isAuthenticated(), newProfile: req.user})
 })
 
-router.get('/forum/:id', async (req,res)=>{ //view post
+router.get('/forum/:id', async (req,res)=>{ //view post 
     const newPost = await Createpost.findById(req.params.id)
-    res.render('show', {newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
+    res.render('show', {comment: newPost.comments.sort((a, b) => b.commentDate - a.commentDate), newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
 })
 
 router.post('/createpost', async (req,res)=> { //create post
@@ -60,6 +60,20 @@ router.post('/editpost/:id', async function(req, res){ //edit post
 router.post('/forum/:id', async (req,res) =>{ //delete post
     await Createpost.findByIdAndDelete(req.params.id)
     res.redirect('/forum')
+})
+
+router.post('/forum/:id/comment', async function(req, res){ //comment on post
+	const commentPost = await Createpost.findById(req.params.id)
+	Createpost.updateOne({_id: commentPost}, {$push: { comments: {author: req.user.username, text: req.body.text}}}, 
+		function (err, user){
+        if (err) return next(err);
+        User.findById(req.user._id, function(err, user) {
+            if (err) return next(err)
+			req.flash('success_msg', 'Comment added')
+            return res.redirect('/forum/'+commentPost._id), {
+			}
+		});
+	})
 })
 
 router.post('/forum/:id/like/', async (req,res) =>{ //like post
