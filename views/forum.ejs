@@ -1,9 +1,5 @@
 <a href="/createpost"><button type="button" class="btn btn-primary btn-block">Create post</button></a>
 <%- include('partials/messages'); %>
-<% newPost.forEach(newPosts => { %>
-    Posted by: <%= newPosts.postUsername %> - Name: <%= newPosts.postUser.name %> ||
-    <%= newPosts.postText %>
-	<% }) %>
 <% newPost.forEach(newPost => { %>
     <div class="card mt-4">
         <div class="card-body">
@@ -14,8 +10,16 @@
 			<p style="float: right"><%= newPost.likeCount %> votes</p>
 			<% }%>
             <h4 class="card-title"><%= newPost.postTitle %></h4>
-			<a href="/users/profiles/<%= newPost.postUsername %>"><p><%= newPost.postUsername %></p></a> - <p> <%= newPost.postUser.name %> </p>
-			
+			<% if (newPost.postUser[0].total && newPost.postUser[0].weight && newPost.postUser[0].wilks) { %>
+				<a href="/users/profiles/<%= newPost.postUsername %>">
+				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px"><p> <%= newPost.postUsername %></a>
+				 - Total: <%= newPost.postUser[0].total %> at <%= newPost.postUser[0].weight %> KG - Wilks score of <%= newPost.postUser[0].wilks %></p>
+			<% } else { %>
+				<a href="/users/profiles/<%= newPost.postUsername %>">
+				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px">
+				<p><%= newPost.postUsername %></a> - This user does not have a total, weight and wilks score set</p>
+			<% }%>
+
             <div class="card-subtitle text-muted mb-2">
                 <%= newPost.date.toLocaleDateString() %>
             </div>
@@ -26,7 +30,7 @@
 			<% if (login) { %>
 				<% if (newPost.postUsername == newProfile.username) { %>
 					<a href="/editpost/<%= newPost._id%>"><button type="button" class="btn btn-info">Edit</button></a>
-					<form action="/forum/<%= newPost.id %>?_method=POST" method="POST" class="d-inline">
+					<form action="/forum/<%= newPost._id %>?_method=POST" method="POST" class="d-inline">
 					<button type="submit" class="btn btn-danger">Delete</button>
 					</form>
 				<% }%>

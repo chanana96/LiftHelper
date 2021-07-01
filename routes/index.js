@@ -20,7 +20,7 @@ router.get('/forum', async (req,res)=>res.render('forum', { //view posts
     newPost: await Createpost.aggregate([
 {
     $lookup: {
-         from: "User", 
+         from: "users", 
          localField: "postUsername", 
          foreignField: "username", 
          as: "postUser"
@@ -32,9 +32,6 @@ router.get('/forum', async (req,res)=>res.render('forum', { //view posts
 ]), login: req.isAuthenticated(), newProfile: req.user
 }));
 
-//newPost: await Createpost.find().sort({ date: 'desc'}), 
-
-
 
 router.get('/dashboard', ensureAuthenticated, (req,res)=> {
     res.render('dashboard', {login: req.isAuthenticated(), newProfile: req.user})
@@ -42,8 +39,6 @@ router.get('/dashboard', ensureAuthenticated, (req,res)=> {
 
 router.get('/forum/:id', async (req,res)=>{ //view post 
     const newPost = await Createpost.findById(req.params.id)
-	const aggregatedpost = await Createpost.aggregate([{$lookup: { from: "User", localField: "postUsername", foreignField: "username", as: "postUser"}}])
-	console.log(aggregatedpost)
     res.render('show', {comment: newPost.comments.sort((a, b) => b.commentDate - a.commentDate), newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
 })
 
@@ -80,6 +75,7 @@ router.post('/editpost/:id', async function(req, res){ //edit post
 
 router.post('/forum/:id', async (req,res) =>{ //delete post
     await Createpost.findByIdAndDelete(req.params.id)
+	req.flash('success_msg', 'Post deleted')
     res.redirect('/forum')
 })
 
@@ -96,17 +92,15 @@ router.post('/forum/:id/comment', async function(req, res){ //comment on post
 		});
 	})
 })
+
 router.post('/forum/:postid/:commentid/deletecomment', async function(req, res){ //delete comment
-	Createpost.updateOne( {_id: req.params.postid}, { $pull: { comments: { _id: req.params.commentid } } } ),
-		function (err, user){
-        if (err) return next(err);
-        User.findById(req.user._id, function(err, user) {
+	await Createpost.updateOne( {_id: req.params.postid}, { $pull: { comments: { _id: req.params.commentid } } }, //needs await here
+        function (err, user) {
             if (err) return next(err)
 			req.flash('success_msg', 'Comment deleted')
-            return res.redirect('/forum'), {
+            return res.redirect('/forum/' + req.params.postid), {
 			}
 		});
-	}
 })
 
 router.post('/forum/:id/like/', async (req,res) =>{ //like post

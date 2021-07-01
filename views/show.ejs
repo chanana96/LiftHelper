@@ -5,16 +5,20 @@
 <br>
 <%= newPost.date %>
 
-<%- include('partials/messages'); %>
 <div class="card mt-4">
 	<div class="card-body">
+		<%- include('partials/messages'); %>
 <% comment.forEach(comment => { %>
 	<div class="card mt-4 text-white bg-dark mb-3">
         <div class="card-body">
 			<a href="/users/profiles/<%= comment.author %>"><p><%= comment.author %></p></a>
+			<% if (login) { %>
+			<% if (comment.author == newProfile.username) { %>
 			<form action="/forum/<%= newPost.id %>/<%= comment.id %>/deletecomment?_method=POST" method="POST" class="d-inline">
 				<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
 			</form>
+			<% }%>
+			<% }%>
             <div class="card-subtitle text-muted mb-2">
                 <%= comment.commentDate %>
             </div>
