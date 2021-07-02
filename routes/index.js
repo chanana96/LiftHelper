@@ -4,6 +4,24 @@ const {ensureAuthenticated} = require('../config/auth');
 const User = require('../models/User');
 const Createpost = require('../models/Createpost');
 const Vote = require('../models/Vote');
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+	destination: function(request, file, callback){
+		callback(null, './public/uploads/images');
+	},
+
+	filename: function(request, file, callback){
+		callback(null, Date.now() + file.originalname)
+	}
+})
+
+const upload = multer({
+	storage: storage,
+	limits:{
+		fieldSize: 1024*1024*3,
+	}
+})
 
 router.get('/', (req,res)=>res.render('homepage', {login: req.isAuthenticated(), newProfile: req.user}));
 router.get('/onerepmaxcalculator', (req,res)=>res.render('onerepmaxcalculator', {login: req.isAuthenticated(), newProfile: req.user}));
@@ -29,7 +47,8 @@ router.get('/forum', async (req,res)=>res.render('forum', { //view posts
 {
     $sort: {date: -1}
 }  
-]), login: req.isAuthenticated(), newProfile: req.user
+]), login: req.isAuthenticated(), 
+newProfile: req.user
 }));
 
 
@@ -42,13 +61,24 @@ router.get('/forum/:id', async (req,res)=>{ //view post
     res.render('show', {comment: newPost.comments.sort((a, b) => b.commentDate - a.commentDate), newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
 })
 
-router.post('/createpost', async (req,res)=> { //create post
-    let newPost = new Createpost({
-        postTitle: req.body.title,
-        postText: req.body.text,
-		postUsername: req.user.username
+router.post('/createpost', upload.single('media'), async (req,res)=> { //create post
+	let newPost
+	if (req.file.filename.includes(".jpg") || req.file.filename.includes(".png") || req.file.filename.includes(".bmp") || req.file.filename.includes(".gif")){
+    	newPost = new Createpost({
+			postTitle: req.body.title,
+			postText: req.body.text,
+			postUsername: req.user.username,
+			image: req.file.filename
     });
-
+	}	
+	else {
+		newPost = new Createpost({
+			postTitle: req.body.title,
+			postText: req.body.text,
+			postUsername: req.user.username,
+			media: req.file.filename
+		});
+	}
     try {
         newPost = await newPost.save()
         res.redirect(`/forum/${newPost.id}`)

@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 		callback(null, Date.now() + file.originalname)
 	}
 })
-//add more routines
+
 const upload = multer({
 	storage: storage,
 	limits:{
@@ -33,13 +33,30 @@ router.get('/logout', (req, res)=>{
 	res.redirect('/');
 })
 
+router.get('/profile/:username/update', (req, res)=>{ //update your profile
+	if (req.user.username == req.params.username){
+	res.render('update', {login: req.isAuthenticated, newProfile: req.user})
+	}
+	else{
+		res.redirect('/')
+	}
+})
 
-router.get("/profile/:id", ensureAuthenticated, function (req, res){ //viewing your profile
-	const newProfile = req.user
-	res.render('profile', {
-	newProfile: newProfile,
-	login: req.isAuthenticated()
-	})
+router.get("/profile/:username", function (req, res){ //viewing your profile
+	User.findOne({
+		username: req.params.username
+	  }, function (err, foundUser) {
+		if (err) {
+		  console.log("error")
+		}
+		res.render('profile', {
+		  foundUser: foundUser,
+		  matchingUser: req.user,
+		  login: req.isAuthenticated(),
+		  newProfile: req.user
+		});
+	  })
+
 });
 
 router.post('/changepassword', async (req, res)=>{ //changing your password
@@ -124,20 +141,20 @@ router.post('/login', (req, res, next)=>{
 	})(req, res, next);
 });
 
-router.get("/profiles/:username", function (req, res) { //viewing other profiles
-	User.findOne({
-	  username: req.params.username
-	}, function (err, foundUser) {
-	  if (err) {
-		console.log("error")
-	  }
-	  res.render('profiles', {
-		foundUser: foundUser,
-		newProfile: req.user,
-		login: req.isAuthenticated()
-	  });
-	})
-});
+// router.get("/profiles/:username", function (req, res) { //viewing other profiles
+// 	User.findOne({
+// 	  username: req.params.username
+// 	}, function (err, foundUser) {
+// 	  if (err) {
+// 		console.log("error")
+// 	  }
+// 	  res.render('profiles', {
+// 		foundUser: foundUser,
+// 		newProfile: req.user,
+// 		login: req.isAuthenticated()
+// 	  });
+// 	})
+// });
 
 
 

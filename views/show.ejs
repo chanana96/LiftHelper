@@ -1,5 +1,15 @@
 <h1><%= newPost.postTitle %></h1>
 <p>Posted by <%= newPost.postUsername %> </p>
+<% if (newPost.image) {%>
+	<img width="320" height="240" src="/public/uploads/images/<%= newPost.image %>" >
+<% } if (newPost.media) { %>
+	<video width="320" height="240" controls>
+		<source src="/public/uploads/images/<%= newPost.media %>" type="video/mp4">
+		<source src="/public/uploads/images/<%= newPost.media %>" type="video/ogg">
+	  Your browser does not support the video tag.
+	  </video>
+<% } else { %>
+<% }%>
 <br>
 <%= newPost.postText %>
 <br>

@@ -10,12 +10,23 @@
 			<p style="float: right"><%= newPost.likeCount %> votes</p>
 			<% }%>
             <h4 class="card-title"><%= newPost.postTitle %></h4>
+				<% if (newPost.image) {%>
+					<img width="145" height="100" src="/public/uploads/images/<%= newPost.image %>" >
+					<% } if (newPost.media) { %>
+						<video width="145" height="100" controls>
+							<source src="/public/uploads/images/<%= newPost.media %>" type="video/mp4">
+							<source src="/public/uploads/images/<%= newPost.media %>" type="video/ogg">
+						  Your browser does not support the video tag.
+						  </video>
+					<% } else { %>
+					<% }%>
+					<br>
 			<% if (newPost.postUser[0].total && newPost.postUser[0].weight && newPost.postUser[0].wilks) { %>
-				<a href="/users/profiles/<%= newPost.postUsername %>">
+				<a href="/users/profile/<%= newPost.postUsername %>">
 				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px"><p> <%= newPost.postUsername %></a>
 				 - Total: <%= newPost.postUser[0].total %> at <%= newPost.postUser[0].weight %> KG - Wilks score of <%= newPost.postUser[0].wilks %></p>
 			<% } else { %>
-				<a href="/users/profiles/<%= newPost.postUsername %>">
+				<a href="/users/profile/<%= newPost.postUsername %>">
 				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px">
 				<p><%= newPost.postUsername %></a> - This user does not have a total, weight and wilks score set</p>
 			<% }%>

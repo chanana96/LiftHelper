@@ -4,7 +4,7 @@
 		<h1 class="text-center mb-3"> Create a post
       </h1>
 	  <%- include('partials/messages'); %>
-<form action="/createpost" method="POST">
+<form action="/createpost" method="POST" enctype="multipart/form-data">
 <div class="form-group">
 	<label for="title">Title</label>
 	<input required
@@ -23,6 +23,8 @@
 		class="form-control"
 		value="<%= typeof text != 'undefined' ? text : '' %>"
 		placeholder="Today my cat stole my car and ruined my marriage"></textarea>
+	<label for ="media">Upload an image or video</label>
+	<input type="file" name="media" id="media" class="form-control-file">
 </div>
 <button type="submit" class="btn btn-primary btn-block">Submit</button>
 </form>

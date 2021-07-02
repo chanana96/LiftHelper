@@ -21,6 +21,12 @@ const CreatepostSchema = new mongoose.Schema({
 		type: Number,
 		required: false
 	},
+	image: {
+		type: String
+	},
+	media: {
+		type: String
+	},
 	comments: [
 		{
 			author:{
