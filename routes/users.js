@@ -33,17 +33,58 @@ router.get('/logout', (req, res)=>{
 	res.redirect('/');
 })
 
-router.get('/profile/:username/update', (req, res)=>{ //update your profile
-	if (req.user.username == req.params.username){
-	res.render('update', {login: req.isAuthenticated, newProfile: req.user})
-	}
-	else{
+router.get('/profile/:username/update', async (req, res)=>{ //update your profile
+	try {
+		req.isAuthenticated
+			if (await req.user.username == req.params.username){
+				res.render('update', {login: req.isAuthenticated, newProfile: req.user})
+			}
+			else{
+				req.flash('error_msg', "You don't have permission to view that!");
+				res.redirect('/')
+			}
+		}
+	catch (error){
+		req.flash('error_msg', "You don't have permission to view that!");
 		res.redirect('/')
 	}
 })
 
-router.get("/profile/:username", function (req, res){ //viewing your profile
-	User.findOne({
+router.post('/profile/:username/updatebio', async (req, res) =>{ //update bio
+	try {
+	await User.updateOne({username: req.params.username}, {$set: {bio: req.body.bio}})
+	res.redirect('/users/profile/'+req.params.username)
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+})
+
+router.post('/profile/:username/comment', async (req, res) =>{ //comment on profile
+	try {
+	await User.updateOne({username: req.params.username}, {$push: {profileComments: {author: req.user.username, text: req.body.text}}})
+	res.redirect('/users/profile/'+req.params.username)
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+})
+
+router.post('/profile/:username/:commentid/deletecomment', async (req, res) =>{ //delete profile comment
+	try {
+	await User.updateOne({username: req.params.username}, {$pull: {profileComments: {_id: req.params.commentid}}})
+	res.redirect('/users/profile/'+req.params.username)
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+})
+
+router.get("/profile/:username", async function (req, res){ //viewing your profile
+	await User.findOne({
 		username: req.params.username
 	  }, function (err, foundUser) {
 		if (err) {
@@ -53,7 +94,9 @@ router.get("/profile/:username", function (req, res){ //viewing your profile
 		  foundUser: foundUser,
 		  matchingUser: req.user,
 		  login: req.isAuthenticated(),
-		  newProfile: req.user
+		  newProfile: req.user,
+		  date: foundUser.joinDate.toLocaleDateString(),
+		  comment: foundUser.profileComments.sort((a, b) => b.commentDate - a.commentDate)
 		});
 	  })
 
@@ -71,7 +114,7 @@ router.post('/changepassword', async (req, res)=>{ //changing your password
 		const password = await bcrypt.hash(req.body.newpassword, salt);
 		await User.updateOne({_id: userID}, {$set: {password: password}});
 		req.flash('success_msg', 'Password changed');
-		res.redirect('profile/:id')
+		res.redirect('profile/'+req.user.username)
 		}
 		catch (error) {
 		console.log('new password error')
@@ -81,7 +124,7 @@ router.post('/changepassword', async (req, res)=>{ //changing your password
 });
 
 
-router.post('/profile/:id', upload.single('image'), function(req, res){ //upload profile picture
+router.post('/profile/:username/update', upload.single('image'), function(req, res){ //upload profile picture
 	User.updateOne({email: req.user.email}, 
 		{$set: {img: req.file.filename}}, 
 		function (err, user){
@@ -89,18 +132,18 @@ router.post('/profile/:id', upload.single('image'), function(req, res){ //upload
         User.findById(req.user._id, function(err, user) {
             if (err) return next(err);
 			req.flash('success_msg', 'Profile picture changed!');
-            return res.redirect('/users/profile/'+req.user.id), {
+            return res.redirect('/users/profile/'+req.user.username), {
 			}
 });
 	})
 })
 
 router.post('/register', (req,res)=>{ //register
-	const {username, name, email, password, password2} = req.body;
+	const {username, name, email, country, gender, password, password2} = req.body;
 
 	let errors = []
 
-	if (!name || !email || !password || !password2 || !username){
+	if (!name || !email || !password || !password2 || !username || !country || !gender){
 		errors.push({msg: "You didn't fill out all the forms!"});
 	}
 
@@ -117,10 +160,10 @@ router.post('/register', (req,res)=>{ //register
 	else{
 		User.findOne({email:email}).then(user=>{if(user){
 			errors.push({msg: "That email belongs to an existing user!"});
-			res.render('register', {errors, username, name, email, password, password2});
+			res.render('register', {errors, username, name, email, country, gender, password, password2});
 		}
 		else{
-			const newUser = new User({username, name, email, password});
+			const newUser = new User({username, name, email, gender, country, password});
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
 				  if (err) throw err;

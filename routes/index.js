@@ -215,7 +215,7 @@ router.post('/wilkscalculator', function(req, res){
 
 router.post('/tdeecalculator', function(req, res){
 	User.updateOne({email: req.user.email}, 
-		{$set: {tdeenumber: req.body.tdee, height: req.body.height, weight: req.body.weight, activitylevel: req.body.activity, gender: req.body.gender, age: req.body.age}}, 
+		{$set: {tdeenumber: req.body.tdee, height: req.body.height, weight: req.body.weight, activitylevel: req.body.activity, age: req.body.age}}, 
 		function (err, user){
         if (err) return next(err);
         User.findById(req.user._id, function(err, user) {
@@ -225,7 +225,7 @@ router.post('/tdeecalculator', function(req, res){
 			}
 		});
 	})
-})	//updateOne didnt work unless i put a callback function error handling thingy
+})
 
 router.post('/onerepmaxcalculator', function(req, res){
 	User.updateOne({email: req.user.email}, {$set: {ormnumber: req.body.compound + " - " + req.body.result}},

@@ -1,0 +1,19 @@
+<img src="/public/uploads/images/<%= newProfile.img %>" width="125" height="125" style="border:2px solid black">
+<form action="/users/profile/<%= newProfile.username %>/update" method="POST" enctype="multipart/form-data">
+	<label for="image">Upload a profile picture</label>
+	<input type="file" name="image" id="image" class="form-control-file"> <button type="submit" class="btn-primary btn-sm">Upload</button>
+</form>
+<a href="/users/changepassword/">Change your password</a>
+<form action="/users/profile/<%= newProfile.username%>/updatebio?_method=POST" method="POST">
+	<div class="form-group">
+		<label for="bio">Update your bio</label>
+		<textarea required style="height:100px;"
+			type="text"
+			name="bio"
+			id="bio"
+			class="form-control"
+			value="<%= typeof bio != 'undefined' ? bio : '' %>"
+			placeholder="Hi! I like turtles and lifting"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</form>

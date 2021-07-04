@@ -56,7 +56,32 @@ const UserSchema = new mongoose.Schema({
 	total:{
 		type: String,
 		required: false
-	}
+	},
+	bio:{
+		type: String
+	},
+	country:{
+		type: String,
+		required: true
+	},
+	joinDate:{
+		type: Date,
+		default: Date.now
+	},
+	profileComments: [
+		{
+			author:{
+				type: String
+			},
+			text:{
+				type: String
+			},
+			commentDate:{
+				type: Date,
+				default: Date.now
+			}
+		}
+	]
 })
 
 const User = mongoose.model('User', UserSchema);

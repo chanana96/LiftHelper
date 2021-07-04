@@ -21,7 +21,7 @@
 <% comment.forEach(comment => { %>
 	<div class="card mt-4 text-white bg-dark mb-3">
         <div class="card-body">
-			<a href="/users/profiles/<%= comment.author %>"><p><%= comment.author %></p></a>
+			<a href="/users/profile/<%= comment.author %>"><p><%= comment.author %></p></a>
 			<% if (login) { %>
 			<% if (comment.author == newProfile.username) { %>
 			<form action="/forum/<%= newPost.id %>/<%= comment.id %>/deletecomment?_method=POST" method="POST" class="d-inline">

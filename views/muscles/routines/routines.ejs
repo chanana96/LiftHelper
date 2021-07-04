@@ -3,5 +3,19 @@
 	LiftHelper(feature to be added soon).
 </p>
 
+<form action="/muscles/routines/routines/" method="POST" class="d-inline">
+	<label for="name">Name your routine</label>
+	<input
+		type="text"
+		name="name"
+		id="name"
+		class="form-control"
+		placeholder="3 day split"
+		value="<%= typeof name != 'undefined' ? name : '' %>"
+	>
+	<button type="submit" class="btn btn-danger">Create a routine</button>
+	</form>
+
 <h3>Beginner Routines</h3>
 <a href="/muscles/routines/531forbeginners/">5/3/1 for beginners by Jim Wendler (3 day routine)</a>
+

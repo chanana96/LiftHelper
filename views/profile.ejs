@@ -1,16 +1,23 @@
+<link rel="stylesheet" type="text/css" href="/public/flags.css">
+
 <div class="row mt-5">
 	<div class="col-md-6 m-auto">
 	  <div class="card card-body">
 		<h1 class="text-center mb-3"><%= foundUser.username %></h1>
 		<%- include('partials/messages'); %>
-<img src="/public/uploads/images/<%= foundUser.img %>" width="125" height="125" style="border:2px solid black">
-<form action="/users/profile/<%= foundUser.id %>" method="POST" enctype="multipart/form-data">
-	<input type="file" name="image" id="image" class="form-control-file"> <button type="submit" class="btn-primary btn-sm">Upload</button>
-</form>
+	<%if (foundUser.img != null) { %>
+		<img src="/public/uploads/images/<%= foundUser.img %>" width="125" height="125" style="border:2px solid black">
+	<% } else { %>
+		<img src="/public/uploads/images/placeholder.png" width="125" height="125" style="border:2px solid black">
+	<% }%>
 <br>
-<p><%= foundUser.name %></p>
-<p><%= foundUser.gender %></p>
-<p><%= foundUser.age %> years old</p>
+<p>User since <%= date %></p>
+<p>Name: <%= foundUser.name %></p>
+<p>Gender: <%= foundUser.gender %></p>
+<p>Country: 
+<span class="flag flag-<%= foundUser.country %>"></span></p>
+<p>Age: <%= foundUser.age %> years old</p>
+<p>Bio: <br> <%= foundUser.bio %></p>
 <br>
 <% if (login) {%>
 <% if (matchingUser.username == foundUser.username) { %>
@@ -24,7 +31,61 @@
 <p><b>Total Daily Energy Expenditure(TDEE): </b> <%= foundUser.tdeenumber %> calories</p>
 <p><b>1 rep max: </b> <%= foundUser.ormnumber %> kg</p>
 <br>
-<a href="/users/changepassword/">Change your password</a>
 </div>
 </div>
 </div>
+<div class="card mt-4">
+	<div class="card-body">
+<% comment.forEach(comment => { %>
+	<div class="card mt-4 text-white bg-dark mb-3">
+        <div class="card-body">
+			<a href="/users/profile/<%= comment.author %>"><p><%= comment.author %></p></a>
+			<% if (login) { %>
+			<% if (comment.author == matchingUser.username) { %>
+				<form action="/users/profile/<%= foundUser.username%>/<%= comment.id %>/deletecomment?_method=POST" method="POST" class="d-inline">
+					<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
+				</form>
+			<% }%>
+			<% }%>
+            <div class="card-subtitle text-muted mb-2">
+                <%= comment.commentDate %>
+            </div>
+            <div class="card-text mb-2">
+                <%= comment.text %>
+            </div>
+        </div>
+    </div>
+<% }) %>
+<% if (login) { %>
+	<div class="row mt-5">
+		<div class="col-md-10 m-auto">
+		<div class="card card-body">
+			<h1 class="text-center mb-1"> Comment
+		</h1>
+	<form action="/users/profile/<%= foundUser.username%>/comment?_method=POST" method="POST">
+	<div class="form-group">
+		<label for="text">Text</label>
+		<textarea required style="height:100px;"
+			type="text"
+			name="text"
+			id="text"
+			class="form-control"
+			value="<%= typeof text != 'undefined' ? text : '' %>"
+			placeholder="Hello friend!"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</form>
+	</div>
+	</div>
+	</div>
+<% } else { %>
+	<div class="row mt-5">
+		<div class="col-md-10 m-auto">
+		<div class="card card-body">
+			<h1 class="text-center mb-1"> <a href="/users/login">Log in to comment!</a>
+		</h1>
+	</form>
+	</div>
+	</div>
+	</div>
+<% }%>

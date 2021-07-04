@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const User = require('../models/User');
+const Routine = require('../models/Routine');
 const {ensureAuthenticated} = require('../config/auth');
 const mongoose  = require('mongoose');
 
@@ -30,9 +31,28 @@ router.get('/quadriceps/barbellsquat', (req, res)=>res.render('muscles/quadricep
 router.get('/trapezius/shrugs', (req, res)=>res.render('muscles/trapezius/shrugs', {login: req.isAuthenticated(), newProfile: req.user}));
 
 //routines
-router.get('/routines/routines', ensureAuthenticated, (req, res)=>res.render('muscles/routines/routines', {login: req.isAuthenticated(), newProfile: req.user }));
+router.get('/routines/routines', (req, res)=>res.render('muscles/routines/routines', {login: req.isAuthenticated(), newProfile: req.user }));
 router.get('/routines/531forbeginners', (req, res)=>res.render('muscles/routines/531forbeginners', {login: req.isAuthenticated(), newProfile: req.user}));
 
-
+router.post('/routines/routines', async (req,res)=> { //initialize routine
+	try { 
+			await Routine.find({routineName: req.user.username})
+    		routine = new Routine({
+			routineName: req.body.name,
+			routineUsername: req.user.username
+		});	
+			try {
+				await routine.save()
+				res.redirect(`/muscles/routines/routines`)
+			} catch (error){
+				console.log(error)
+				res.redirect('/')
+			}
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+})
 
 module.exports = router;
