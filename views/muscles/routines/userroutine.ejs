@@ -1,0 +1,39 @@
+<h3>Routine name: <%= routine.routineName %></h3>
+<form action="/muscles/routines/<%= newProfile.username %>/" method="POST" class="d-inline">
+	<button type="submit" class="btn btn-danger">Delete</button>
+	</form>
+
+<h1>Monday</h1>
+<% routine.monday.forEach(monday => { %>
+	<li><a href="/muscles/<%= monday.link %>"><%=monday.exercise%></a></li>
+<% }) %>
+
+<h1>Tuesday</h1>
+<% routine.tuesday.forEach(tuesday => { %>
+	<li><a href="/muscles/<%= tuesday.link %>"><%=tuesday.exercise%></a></li>
+<% }) %>
+
+<h1>Wednesday</h1>
+<% routine.wednesday.forEach(wednesday => { %>
+	<li><a href="/muscles/<%= wednesday.link %>"><%=wednesday.exercise%></a></li>
+<% }) %>
+
+<h1>Thursday</h1>
+<% routine.thursday.forEach(thursday => { %>
+	<li><a href="/muscles/<%= thursday.link %>"><%=thursday.exercise%></a></li>
+<% }) %>
+
+<h1>Friday</h1>
+<% routine.friday.forEach(friday => { %>
+	<li><a href="/muscles/<%= friday.link %>"><%=friday.exercise%></a></li>
+<% }) %>
+
+<h1>Saturday</h1>
+<% routine.saturday.forEach(saturday => { %>
+	<li><a href="/muscles/<%= saturday.link %>"><%=saturday.exercise%></a></li>
+<% }) %>
+
+<h1>Sunday</h1>
+<% routine.sunday.forEach(sunday => { %>
+	<li><a href="/muscles/<%= sunday.link %>"><%=sunday.exercise%></a></li>
+<% }) %>

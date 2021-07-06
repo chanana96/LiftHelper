@@ -1,5 +1,20 @@
+<%- include('../partials/messages'); %>
 <h3>Barbell Squat</h3>
 <p>The Barbell Squat is a fantastic compound exercise that targets your Quads and Glutes.</p>
+<div>
+	<form action="/muscles/quadriceps/barbellsquat/" method="POST" class="d-inline">
+		<select name="day" id="day">
+			<option value="monday">Monday</option>
+			<option value="tuesday">Tuesday</option>
+			<option value="wednesday">Wednesday</option>
+			<option value="thursday">Thursday</option>
+			<option value="friday">Friday</option>
+			<option value="saturday">Saturday</option>
+			<option value="sunday">Sunday</option>
+		  </select>
+		<button type="submit" class="btn btn-danger">Add to routine</button>
+	</form>
+	</div>
 <img src="https://hips.hearstapps.com/ame-prod-menshealth-assets.s3.amazonaws.com/main/assets/barbell-squat.gif?resize=480:*" width="420" height="300">
   <iframe width="420" height="300"
   src="https://www.youtube.com/embed/Dy28eq2PjcM">

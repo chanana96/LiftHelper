@@ -4,6 +4,7 @@ const User = require('../models/User');
 const Routine = require('../models/Routine');
 const {ensureAuthenticated} = require('../config/auth');
 const mongoose  = require('mongoose');
+const exercisesController = require('../controllers/exercises');
 
 //main muscles
 router.get('/chest', (req, res)=>res.render('muscles/chest/chest', {login: req.isAuthenticated(), newProfile: req.user}));
@@ -34,25 +35,58 @@ router.get('/trapezius/shrugs', (req, res)=>res.render('muscles/trapezius/shrugs
 router.get('/routines/routines', (req, res)=>res.render('muscles/routines/routines', {login: req.isAuthenticated(), newProfile: req.user }));
 router.get('/routines/531forbeginners', (req, res)=>res.render('muscles/routines/531forbeginners', {login: req.isAuthenticated(), newProfile: req.user}));
 
+router.get('/routines/:username', async (req, res)=>{ //view your routine
+	req.params.username = req.user.username
+	await Routine.findOne({routineUsername:req.user.username},(error, routine)=>{
+		if (error){
+			console.log(error)
+			res.redirect('/')
+		}
+	res.render('muscles/routines/userroutine', {login: req.isAuthenticated(), newProfile: req.user, routine: routine
+	})})
+});
+
+
+
 router.post('/routines/routines', async (req,res)=> { //initialize routine
-	try { 
-			await Routine.find({routineName: req.user.username})
-    		routine = new Routine({
+
+	await Routine.findOne({routineUsername:req.user.username}).then(user=>{if(user){
+		req.flash('error_msg', "You already have an existing routine!");
+		res.redirect('/');
+	}
+	else{
+			routine = new Routine({
 			routineName: req.body.name,
 			routineUsername: req.user.username
 		});	
-			try {
-				await routine.save()
-				res.redirect(`/muscles/routines/routines`)
-			} catch (error){
-				console.log(error)
-				res.redirect('/')
-			}
+		routine.save()
+		req.flash('success_msg', "Routine created!");
+		res.redirect('/muscles/routines/routines')
+	}})
+
+})
+
+router.post('/routines/:username', async (req,res)=> { //delete routine
+	req.params.username = req.user.username
+	try {
+	await Routine.findOneAndDelete({routineUsername:req.user.username})
+	req.flash('success_msg', "Routine succesfully deleted!")
+	res.redirect('/')
 	}
 	catch (error){
-		console.log(error)
+		req.flash('error_msg', "error")
 		res.redirect('/')
 	}
+
 })
+
+router.post('/abs/hanginglegraise/', exercisesController.hanginglegraise)
+router.post('/biceps/bicepcurls/', exercisesController.bicepcurls)
+router.post('/calves/calfraises/', exercisesController.calfraises)
+router.post('/chest/barbellbenchpress/', exercisesController.barbellbenchpress)
+router.post('/chest/inclinebenchpress/', exercisesController.inclinebenchpress)
+router.post('/frontdeltoids/overheadpress/', exercisesController.overheadpress)
+router.post('/quadriceps/barbellsquat/', exercisesController.barbellsquat)
+router.post('/trapezius/shrugs/', exercisesController.shrugs)
 
 module.exports = router;

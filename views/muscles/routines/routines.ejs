@@ -1,7 +1,11 @@
+<%- include('../partials/messages'); %>
 <h1>Routines</h1>
 <p>Welcome to the routines page. Here, you can select from various routines from beginner to intermediate to advanced or even create your own using the many exercises we have on
-	LiftHelper(feature to be added soon).
+	LiftHelper.
 </p>
+<% if (login) { %>
+<a href="/muscles/routines/<%= newProfile.username %>/">Go to your routine</a>
+<% }%>
 
 <form action="/muscles/routines/routines/" method="POST" class="d-inline">
 	<label for="name">Name your routine</label>

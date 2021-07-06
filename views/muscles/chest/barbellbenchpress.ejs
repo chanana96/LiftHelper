@@ -1,6 +1,20 @@
+<%- include('../partials/messages'); %>
 <h3>Barbell bench press</h3>
 <p>The barbell bench press is a very popular and efficient compound exercise that targets your chest, shoulders and triceps.</p>
-
+<div>
+	<form action="/muscles/chest/barbellbenchpress/" method="POST" class="d-inline">
+		<select name="day" id="day">
+			<option value="monday">Monday</option>
+			<option value="tuesday">Tuesday</option>
+			<option value="wednesday">Wednesday</option>
+			<option value="thursday">Thursday</option>
+			<option value="friday">Friday</option>
+			<option value="saturday">Saturday</option>
+			<option value="sunday">Sunday</option>
+		  </select>
+		<button type="submit" class="btn btn-danger">Add to routine</button>
+	</form>
+	</div>
 <img src="https://j.gifs.com/KRxzYY.gif">
   <iframe width="420" height="300"
   src="https://www.youtube.com/embed/BYKScL2sgCs">
