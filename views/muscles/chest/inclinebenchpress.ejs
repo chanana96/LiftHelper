@@ -2,6 +2,7 @@
 <h3>Incline bench press</h3>
 <p>The incline bench press can be used with dumbbells or barbells as an accessory exercise to complement your compound work. The higher you angle the bench, 
 	the more it works your shoulders.</p>
+	<% if (login) { %>
 	<div>
 		<form action="/muscles/chest/inclinebenchpress/" method="POST" class="d-inline">
 			<select name="day" id="day">
@@ -16,6 +17,7 @@
 			<button type="submit" class="btn btn-danger">Add to routine</button>
 		</form>
 		</div>
+		<% }%>
 <img src="http://upl.stack.com/wp-content/uploads/2013/04/16143158/incline-bench-mistakes-3.gif">
 <iframe width="420" height="300"
 src="https://www.youtube.com/embed/DbFgADa2PL8">

@@ -81,6 +81,28 @@ const UserSchema = new mongoose.Schema({
 				default: Date.now
 			}
 		}
+	],
+	friendRequests: [
+		{
+			requestUsername: {
+				type: String
+			},
+			requestDate: {
+				type: Date,
+				default: Date.now
+			}
+		}
+	],
+	friends: [
+		{
+			friendUsername:{
+				type: String
+			},
+			acceptedDate: {
+				type: Date,
+				default: Date.now
+			}
+		}
 	]
 })
 

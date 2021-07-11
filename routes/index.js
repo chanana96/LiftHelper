@@ -23,7 +23,30 @@ const upload = multer({
 	}
 })
 
-router.get('/', (req,res)=>res.render('homepage', {login: req.isAuthenticated(), newProfile: req.user}));
+router.use(async function(req, res, next){
+
+	try {
+		res.locals.fr = await User.aggregate([
+			{$match:{username: req.user.username}},	
+			{$project: {
+				frCount: {
+				  $size: "$friendRequests"
+				}
+			  }}]),
+		res.locals.login = req.isAuthenticated();
+		res.locals.newProfile = req.user;
+		next();
+	}
+	catch {
+		res.locals.login = req.isAuthenticated();
+		res.locals.newProfile = req.user;
+		next();
+	}
+
+});
+
+
+router.get('/', (req,res)=>res.render('homepage'));
 router.get('/onerepmaxcalculator', (req,res)=>res.render('onerepmaxcalculator', {login: req.isAuthenticated(), newProfile: req.user}));
 router.get('/tdeecalculator', (req,res)=>res.render('tdeecalculator', {login: req.isAuthenticated(), newProfile: req.user}));
 router.get('/ibwcalculator', (req,res)=>res.render('ibwcalculator', {login: req.isAuthenticated(), newProfile: req.user}));

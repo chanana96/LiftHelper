@@ -1,39 +1,122 @@
+<%- include('../partials/messages'); %>
+
 <h3>Routine name: <%= routine.routineName %></h3>
+<% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
 <form action="/muscles/routines/<%= newProfile.username %>/" method="POST" class="d-inline">
 	<button type="submit" class="btn btn-danger">Delete</button>
 	</form>
+	<% }%>
+<% }%>
 
-<h1>Monday</h1>
+<h1>Monday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/monday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.monday.forEach(monday => { %>
-	<li><a href="/muscles/<%= monday.link %>"><%=monday.exercise%></a></li>
+	<li><a href="/muscles/<%= monday.link %>"><%=monday.exercise%></a></li> 
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= monday._id %>/monday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Tuesday</h1>
+<h1>Tuesday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/tuesday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.tuesday.forEach(tuesday => { %>
 	<li><a href="/muscles/<%= tuesday.link %>"><%=tuesday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= tuesday._id %>/tuesday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Wednesday</h1>
+<h1>Wednesday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/wednesday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.wednesday.forEach(wednesday => { %>
 	<li><a href="/muscles/<%= wednesday.link %>"><%=wednesday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= wednesday._id %>/wednesday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Thursday</h1>
+<h1>Thursday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/thursday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.thursday.forEach(thursday => { %>
 	<li><a href="/muscles/<%= thursday.link %>"><%=thursday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= thursday._id %>/thursday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Friday</h1>
+<h1>Friday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/friday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.friday.forEach(friday => { %>
 	<li><a href="/muscles/<%= friday.link %>"><%=friday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= friday._id %>/friday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Saturday</h1>
+<h1>Saturday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/saturday">Add exercises</a>
+		<% }%>
+	<% }%>
 <% routine.saturday.forEach(saturday => { %>
 	<li><a href="/muscles/<%= saturday.link %>"><%=saturday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= saturday._id %>/saturday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>
 
-<h1>Sunday</h1>
+<h1>Sunday</h1> <% if (login) { %>
+	<% if (routine.routineUsername == newProfile.username) { %>
+		<a href="/muscles/routines/<%= newProfile.username %>/sunday">Add exercises</a>
+		<% }%>
+		<% }%>
 <% routine.sunday.forEach(sunday => { %>
 	<li><a href="/muscles/<%= sunday.link %>"><%=sunday.exercise%></a></li>
+	<% if (login) { %>
+		<% if (routine.routineUsername == newProfile.username) { %>
+	<form action="/muscles/routines/<%= newProfile.username %>/<%= sunday._id %>/sunday_delete?_method=POST" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-primary btn-sm">Delete</button>
+	</form>
+	<% }%>
+	<% }%>
 <% }) %>

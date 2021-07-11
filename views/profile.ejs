@@ -11,6 +11,43 @@
 		<img src="/public/uploads/images/placeholder.png" width="125" height="125" style="border:2px solid black">
 	<% }%>
 <br>
+<% if (login) {%>
+	<% if (foundUser.username !== matchingUser.username) {%>
+		<% var found = false; var acceptfr = false; var deletefr = false; %>
+		<% foundUser.friendRequests.forEach(fr => { %>
+				<% if (fr.requestUsername == matchingUser.username) {%>
+					<% found = true %>
+				<% }%>
+		<% }) %>
+		<% matchingUser.friendRequests.forEach(ownfr => { %>
+			<% if (ownfr.requestUsername == foundUser.username) {%>
+				<% acceptfr = true %>
+			<% }%>
+		<% }) %>
+		<% matchingUser.friends.forEach(existingfriend => { %>
+			<% if (existingfriend.friendUsername == foundUser.username) {%>
+				<% deletefr = true %>
+			<% }%>
+		<% }) %>
+		<% if (found == true) {%>
+			<p>Request sent</p>
+		<% }%>
+		<% if (acceptfr == true) {%>
+			<p>accept</p>
+		<% }%>
+		<% if (found == false && acceptfr == false && deletefr == false) {%>
+			<form action="/users/profile/<%= foundUser.username%>/addfriend?_method=POST" method="POST" class="d-inline">
+				<button type="submit" class="btn btn-danger" style="float: right;">Add friend</button>
+			</form>
+		<% }%>
+		<% if (deletefr == true) {%>
+			<form action="/users/profile/<%= foundUser.username%>/deletefriend?_method=POST" method="POST" class="d-inline">
+				<button type="submit" class="btn btn-danger" style="float: right;">Delete friend</button>
+			</form>
+		<% }%>
+<% }%>
+<% }%>
+
 <p>User since <%= date %></p>
 <p>Name: <%= foundUser.name %></p>
 <p>Gender: <%= foundUser.gender %></p>
@@ -30,7 +67,18 @@
 <p><b>Activity level: </b> <%= foundUser.activitylevel %></p>
 <p><b>Total Daily Energy Expenditure(TDEE): </b> <%= foundUser.tdeenumber %> calories</p>
 <p><b>1 rep max: </b> <%= foundUser.ormnumber %> kg</p>
+<% if (routineUser) {%>
+<a href="/muscles/routines/<%= foundUser.username %>"><%= foundUser.username %>'s routine</a>
+<% } else { %>
+	<p><%= foundUser.username %> has no routine.</p>
+	<% }%>
 <br>
+<p><%= foundUser.username %>'s friends: 
+	<% foundUser.friends.forEach(friend => { %>
+		<a href="/users/profile/<%= friend.friendUsername %>"><%= friend.friendUsername %></a>
+		
+<% }) %>
+</p>
 </div>
 </div>
 </div>

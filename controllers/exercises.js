@@ -1,5 +1,44 @@
 const Routine = require('../models/Routine');
 
+exports.add = async (req, res) =>{ //add exercise from add page
+	let day = req.params.day
+	updatePayload = []
+
+	if (req.body.bbp){
+		updatePayload.push({exercise: req.body.bbp.split(',')[0], link: req.body.bbp.split(',')[1]})
+	}
+	if (req.body.shrugs){
+		updatePayload.push({exercise: req.body.shrugs.split(',')[0], link: req.body.shrugs.split(',')[1]})
+	}
+	if (req.body.incline){
+		updatePayload.push({exercise: req.body.incline.split(',')[0], link: req.body.incline.split(',')[1]})
+	}
+	if (req.body.hlr){
+		updatePayload.push({exercise: req.body.hlr.split(',')[0], link: req.body.hlr.split(',')[1]})
+	}
+	if (req.body.curls){
+		updatePayload.push({exercise: req.body.curls.split(',')[0], link: req.body.curls.split(',')[1]})
+	}
+	if (req.body.calfraise){
+		updatePayload.push({exercise: req.body.calfraise.split(',')[0], link: req.body.calfraise.split(',')[1]})
+	}
+	if (req.body.ohp){
+		updatePayload.push({exercise: req.body.ohp.split(',')[0], link: req.body.ohp.split(',')[1]})
+	}
+	if (req.body.squats){
+		updatePayload.push({exercise: req.body.squats.split(',')[0], link: req.body.squats.split(',')[1]})
+	}
+	try{
+	await Routine.updateOne( {routineUsername: req.user.username}, { $push: { [day]: {$each: updatePayload} } } )
+	req.flash('success_msg', 'Exercise added to routine!')
+	res.redirect('/muscles/routines/'+req.user.username)
+	}
+	catch(error){
+		console.log(error)
+	}	
+}
+
+//adding exercises to routine
 exports.hanginglegraise = async (req, res) =>{
 	let day = req.body.day
 	try{
@@ -94,4 +133,97 @@ exports.shrugs = async (req, res) =>{
 	catch(error){
 		console.log(error)
 	}	
+}
+
+
+//exercise deletions
+exports.mondaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { monday: { _id: req.params.id } } })
+		req.flash('success_msg', 'Exercise deleted!')
+		res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.tuesdaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { tuesday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.wednesdaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { wednesday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.thursdaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { thursday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.fridaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { friday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.saturdaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { saturday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
+}
+
+exports.sundaydelete = async (req, res)=>{ 
+	try{
+	await Routine.updateOne( {routineUsername: req.params.username}, { $pull: { sunday: { _id: req.params.id } } })
+	req.flash('success_msg', 'Exercise deleted!')
+	res.redirect('/muscles/routines/'+req.params.username)
+	}
+	catch(error){
+		console.log(error)
+		res.redirect('/')
+	}
+
 }

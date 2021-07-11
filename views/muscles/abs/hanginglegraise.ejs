@@ -1,6 +1,7 @@
 <%- include('../partials/messages'); %>
 <h3>Hanging leg raise</h3>
 <p>Hanging leg raises are very effective for building abs. If you cannot do them, you can work up to them from hanging knee raises.</p>
+<% if (login) { %>
 <div>
 <form action="/muscles/abs/hanginglegraise/" method="POST" class="d-inline">
 	<select name="day" id="day">
@@ -15,6 +16,7 @@
 	<button type="submit" class="btn btn-danger">Add to routine</button>
 </form>
 </div>
+<% }%>
 <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/workouts/2017/05/hanginglegraise-1496161341.gif" width="420" height="300">
   <iframe width="420" height="300"
   src="https://www.youtube.com/embed/X-ACS9vpRyU">

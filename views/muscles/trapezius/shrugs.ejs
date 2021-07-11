@@ -1,6 +1,7 @@
 <%- include('../partials/messages'); %>
 <h3>Shrugs</h3>
 <p>Shrugs are a great isolation exercise for hitting the traps.</p>
+<% if (login) { %>
 <div>
 	<form action="/muscles/trapezius/shrugs/" method="POST" class="d-inline">
 		<select name="day" id="day">
@@ -15,6 +16,7 @@
 		<button type="submit" class="btn btn-danger">Add to routine</button>
 	</form>
 	</div>
+	<% }%>
 <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/workouts/2017/03/db-shrug-1489073548.gif" width="420" height="300">
   <iframe width="420" height="300"
   src="https://www.youtube.com/embed/cJRVVxmytaM">

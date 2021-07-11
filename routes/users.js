@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Routine = require('../models/Routine');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const {ensureAuthenticated} = require('../config/auth');
-const multer = require('multer')
+const multer = require('multer');
 
 const storage = multer.diskStorage({
 	destination: function(request, file, callback){
@@ -23,6 +24,28 @@ const upload = multer({
 	}
 })
 
+router.use(async function(req, res, next){
+
+	try {
+		res.locals.fr = await User.aggregate([
+			{$match:{username: req.user.username}},	
+			{$project: {
+				frCount: {
+				  $size: "$friendRequests"
+				}
+			  }}]),
+		res.locals.login = req.isAuthenticated();
+		res.locals.newProfile = req.user;
+		next();
+	}
+	catch {
+		res.locals.login = req.isAuthenticated();
+		res.locals.newProfile = req.user;
+		next();
+	}
+
+});
+
 router.get('/register', (req,res)=>res.render('register', {login: req.isAuthenticated()}))
 router.get('/login', (req,res)=>res.render('login', {login: req.isAuthenticated()}))
 router.get('/changepassword', (req,res)=>res.render('changepassword', {newProfile: req.user, login: req.isAuthenticated()}))
@@ -33,6 +56,9 @@ router.get('/logout', (req, res)=>{
 	res.redirect('/');
 })
 
+router.get ('/friendrequests', (req, res) =>{ //view friend requests
+	res.render('friendrequests')
+})
 router.get('/profile/:username/update', async (req, res)=>{ //update your profile
 	try {
 		req.isAuthenticated
@@ -50,6 +76,19 @@ router.get('/profile/:username/update', async (req, res)=>{ //update your profil
 	}
 })
 
+router.post ('/friendrequests/:acceptingname', async (req, res) =>{ //accept friend request
+	try {
+		await User.updateOne({username: req.user.username}, {$pull: {friendRequests: {requestUsername: req.params.acceptingname}}})
+		await User.updateOne({username: req.user.username}, {$push: {friends: {friendUsername: req.params.acceptingname}} })
+		await User.updateOne({username: req.params.acceptingname}, {$push: {friends: {friendUsername: req.user.username}} })
+		req.flash('success_msg', 'Accepted friend!')
+		res.redirect('/users/friendrequests')
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+})
 router.post('/profile/:username/updatebio', async (req, res) =>{ //update bio
 	try {
 	await User.updateOne({username: req.params.username}, {$set: {bio: req.body.bio}})
@@ -72,6 +111,33 @@ router.post('/profile/:username/comment', async (req, res) =>{ //comment on prof
 	}
 })
 
+router.post('/profile/:username/addfriend', async (req, res) => { //add friend
+	try {
+		await User.updateOne({username: req.params.username}, {$push: {friendRequests: {requestUsername: req.user.username}}})
+		req.flash('success_msg', 'Added friend!')
+		res.redirect('/users/profile/'+req.params.username)
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+}
+)
+
+router.post('/profile/:username/deletefriend', async (req, res) => { //delete friend
+	try {
+		await User.updateOne({username: req.user.username}, {$pull: {friends: {friendUsername: req.params.username}}})
+		await User.updateOne({username: req.params.username}, {$pull: {friends: {friendUsername: req.user.username}}})
+		req.flash('success_msg', 'Deleted friend!')
+		res.redirect('/users/profile/'+req.params.username)
+	}
+	catch (error){
+		console.log(error)
+		res.redirect('/')
+	}
+}
+)
+
 router.post('/profile/:username/:commentid/deletecomment', async (req, res) =>{ //delete profile comment
 	try {
 	await User.updateOne({username: req.params.username}, {$pull: {profileComments: {_id: req.params.commentid}}})
@@ -86,20 +152,26 @@ router.post('/profile/:username/:commentid/deletecomment', async (req, res) =>{ 
 router.get("/profile/:username", async function (req, res){ //viewing your profile
 	await User.findOne({
 		username: req.params.username
-	  }, function (err, foundUser) {
+	  }, async function (err, foundUser) {
 		if (err) {
 		  console.log("error")
 		}
+		await Routine.findOne({
+			routineUsername: req.params.username
+		}, function (err, routineUser){
+			if (err) {
+				console.log("error")
+			  }
 		res.render('profile', {
 		  foundUser: foundUser,
 		  matchingUser: req.user,
-		  login: req.isAuthenticated(),
-		  newProfile: req.user,
+		  routineUser: routineUser,
 		  date: foundUser.joinDate.toLocaleDateString(),
 		  comment: foundUser.profileComments.sort((a, b) => b.commentDate - a.commentDate)
 		});
 	  })
-
+	}
+	)
 });
 
 router.post('/changepassword', async (req, res)=>{ //changing your password
@@ -183,21 +255,6 @@ router.post('/login', (req, res, next)=>{
 		failureRedirect: (	req.flash('error_msg', 'Wrong password!'), '/users/login')
 	})(req, res, next);
 });
-
-// router.get("/profiles/:username", function (req, res) { //viewing other profiles
-// 	User.findOne({
-// 	  username: req.params.username
-// 	}, function (err, foundUser) {
-// 	  if (err) {
-// 		console.log("error")
-// 	  }
-// 	  res.render('profiles', {
-// 		foundUser: foundUser,
-// 		newProfile: req.user,
-// 		login: req.isAuthenticated()
-// 	  });
-// 	})
-// });
 
 
 

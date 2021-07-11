@@ -1,0 +1,26 @@
+<form action="/muscles/routines/<%= newProfile.username %>/<%=day%>?_method=POST" method="POST" class="d-inline">
+	<h3>Chest</h3>
+	<input type="checkbox" name="bbp" value="Barbell bench press,chest/barbellbenchpress">
+	<label for="Barbell bench press"> Barbell bench press</label><br>
+	<input type="checkbox" name="incline" value="Incline bench press,chest/inclinebenchpress">
+	<label for="incline"> Incline bench press</label><br>
+	<h3>Traps</h3>
+	<input type="checkbox" name="shrugs" value="Shrugs,trapezius/shrugs">
+	<label for="Shrugs"> Shrugs</label><br>
+	<h3>Abs</h3>
+	<input type="checkbox" name="hlr" value="Hanging leg raise,abs/hanginglegraise">
+	<label for="hlr"> Hanging leg raise</label><br>
+	<h3>Biceps</h3>
+	<input type="checkbox" name="curls" value="Bicep curls,biceps/bicepcurls">
+	<label for="curls"> Bicep curls</label><br>
+	<h3>Calves</h3>
+	<input type="checkbox" name="calfraise" value="Calf raises,calves/calfraises">
+	<label for="calfraise"> Calf raises</label><br>
+	<h3>Front delts</h3>
+	<input type="checkbox" name="ohp" value="Overhead press,frontdeltoids/overheadpress">
+	<label for="ohp"> Overhead press</label><br>
+	<h3>Quads</h3>
+	<input type="checkbox" name="squats" value="Barbell squat,quadriceps/barbellsquat">
+	<label for="squats"> Barbell squat</label><br>
+	<button type="submit" class="btn btn-primary btn">Add</button>
+</form>

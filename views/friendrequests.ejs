@@ -1,0 +1,6 @@
+<% newProfile.friendRequests.forEach(fr => { %>
+	<p><%= fr.requestUsername %></p>
+	<form action="/users/friendrequests/<%= fr.requestUsername %>" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-danger" style="float: right;">Accept friend</button>
+	</form>
+<% }) %>
