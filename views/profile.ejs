@@ -13,6 +13,9 @@
 <br>
 <% if (login) {%>
 	<% if (foundUser.username !== matchingUser.username) {%>
+
+		<a href="<%= foundUser.username %>/message"><button type="submit" class="btn btn-danger" style="float: right;">Message</button></a>
+
 		<% var found = false; var acceptfr = false; var deletefr = false; %>
 		<% foundUser.friendRequests.forEach(fr => { %>
 				<% if (fr.requestUsername == matchingUser.username) {%>

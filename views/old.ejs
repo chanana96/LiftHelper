@@ -1,0 +1,30 @@
+<% if (!newProfile.readMessages[0]) {%>
+	<h3>You have no old messages right now</h3>
+	<%}%>
+	<%- include('partials/messages'); %>
+	<% newProfile.readMessages.forEach(message => { %>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h1><%= message.title %></h1>
+				<p>Sent from: <a href="/users/profile/<%= message.sender %>"><%= message.sender %></a></p>
+				<p>Sent on: <%= message.date %></p>
+				<% if (message.image) {%>
+					<img width="145" height="100" src="/public/uploads/images/<%= message.image %>" >
+					<% } if (message.media) { %>
+						<video width="320" height="220" controls>
+							<source src="/public/uploads/images/<%= message.media %>" type="video/mp4">
+							<source src="/public/uploads/images/<%= message.media %>" type="video/ogg">
+						  Your browser does not support the video tag.
+						  </video>
+					<% } else { %>
+					<% }%>
+		<p><%= message.text %></p>
+		<a href="/users/profile/<%= message.sender %>/message">
+			<button type="button" class="btn btn-danger">Send a reply</button>
+		</a>
+		</div>
+		</div>
+	<% }) %>
+
+
+	<a href="/users/inbox/">Go back to inbox</a>

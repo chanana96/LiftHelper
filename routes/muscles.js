@@ -14,6 +14,9 @@ router.use(async function(req, res, next){
 			{$project: {
 				frCount: {
 				  $size: "$friendRequests"
+				},
+				msgCount: {
+					$size: "$unreadMessages"
 				}
 			  }}]),
 		res.locals.login = req.isAuthenticated();
@@ -57,53 +60,12 @@ router.get('/trapezius/shrugs', (req, res)=>res.render('muscles/trapezius/shrugs
 router.get('/routines/routines', (req, res)=>res.render('muscles/routines/routines', {login: req.isAuthenticated(), newProfile: req.user }));
 router.get('/routines/531forbeginners', (req, res)=>res.render('muscles/routines/531forbeginners', {login: req.isAuthenticated(), newProfile: req.user}));
 
-router.get('/routines/:username/:day', async (req, res) => //add page
-	res.render('muscles/routines/add', {login: req.isAuthenticated(), newProfile: req.user, day: req.params.day})
-)
-
-router.get('/routines/:username', async (req, res)=>{ //view your routine
-	await Routine.findOne({routineUsername:req.params.username},(error, routine)=>{
-		if (error){
-			console.log(error)
-			res.redirect('/')
-		}
-	res.render('muscles/routines/userroutine', {login: req.isAuthenticated(), newProfile: req.user, routine: routine
-	})})
-});
-
-router.post('/routines/:username/:day', exercisesController.add)
-
-router.post('/routines/routines', ensureAuthenticated, async (req,res)=> { //initialize routine
-
-	await Routine.findOne({routineUsername:req.user.username}).then(user=>{if(user){
-		req.flash('error_msg', "You already have an existing routine!");
-		res.redirect('/muscles/routines/'+req.user.username);
-	}
-	else{
-			routine = new Routine({
-			routineName: req.body.name,
-			routineUsername: req.user.username
-		});	
-		routine.save()
-		req.flash('success_msg', "Routine created!");
-		res.redirect('/muscles/routines/routines')
-	}})
-
-})
-
-router.post('/routines/:username', async (req,res)=> { //delete routine
-	req.params.username = req.user.username
-	try {
-	await Routine.findOneAndDelete({routineUsername:req.user.username})
-	req.flash('success_msg', "Routine succesfully deleted!")
-	res.redirect('/')
-	}
-	catch (error){
-		req.flash('error_msg', "error")
-		res.redirect('/')
-	}
-
-})
+//personalized routines system
+router.get('/routines/:username/:day', exercisesController.addui) // add exercise(s) on x day ui
+router.get('/routines/:username', exercisesController.viewroutine);
+router.post('/routines/:username/:day', exercisesController.add) // add exercise(s) on x day
+router.post('/routines/routines', ensureAuthenticated, exercisesController.makeroutine)
+router.post('/routines/:username', exercisesController.deleteroutine)
 
 //delete exercises
 router.post('/routines/:username/:id/monday_delete/', exercisesController.mondaydelete)

@@ -103,6 +103,54 @@ const UserSchema = new mongoose.Schema({
 				default: Date.now
 			}
 		}
+	],
+	unreadMessages: [
+		{
+			sender: {
+				type: String
+			},
+			title: {
+				type: String
+			},
+			text: {
+				type: String
+			},
+			media: {
+				type: String
+			},
+			image: {
+				type: String
+			},
+			date: {
+				type: Date,
+				default: Date.now
+			},
+
+		}
+	],
+	readMessages: [
+		{
+			sender: {
+				type: String
+			},
+			title: {
+				type: String
+			},
+			text: {
+				type: String
+			},
+			media: {
+				type: String
+			},
+			image: {
+				type: String
+			},
+			date: {
+				type: Date,
+				default: Date.now
+			},
+
+		}
 	]
 })
 

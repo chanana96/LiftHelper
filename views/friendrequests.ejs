@@ -1,3 +1,7 @@
+<% if (!newProfile.friendRequests[0]) {%>
+<h3>You have no pending friend requests right now</h3>
+<%}%>
+<%- include('partials/messages'); %>
 <% newProfile.friendRequests.forEach(fr => { %>
 	<p><%= fr.requestUsername %></p>
 	<form action="/users/friendrequests/<%= fr.requestUsername %>" method="POST" class="d-inline">

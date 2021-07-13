@@ -1,5 +1,51 @@
 const Routine = require('../models/Routine');
 
+exports.addui = async (req, res) => //add routines page
+	res.render('muscles/routines/add', {login: req.isAuthenticated(), newProfile: req.user, day: req.params.day})
+
+exports.viewroutine = async (req, res)=>{ //view your routine
+	await Routine.findOne({routineUsername:req.params.username},(error, routine)=>{
+		if (error){
+			console.log(error)
+			res.redirect('/')
+		}
+	res.render('muscles/routines/userroutine', {login: req.isAuthenticated(), newProfile: req.user, routine: routine
+	})})
+}
+
+exports.makeroutine = async (req,res)=> { //initialize routine
+
+	await Routine.findOne({routineUsername:req.user.username}).then(user=>{if(user){
+		req.flash('error_msg', "You already have an existing routine!");
+		res.redirect('/muscles/routines/'+req.user.username);
+	}
+	else{
+			routine = new Routine({
+			routineName: req.body.name,
+			routineUsername: req.user.username
+		});	
+		routine.save()
+		req.flash('success_msg', "Routine created!");
+		res.redirect('/muscles/routines/routines')
+	}})
+
+}
+
+exports.deleteroutine = async (req,res)=> { //delete routine
+	req.params.username = req.user.username
+	try {
+	await Routine.findOneAndDelete({routineUsername:req.user.username})
+	req.flash('success_msg', "Routine succesfully deleted!")
+	res.redirect('/')
+	}
+	catch (error){
+		req.flash('error_msg', "error")
+		res.redirect('/')
+	}
+
+}
+
+
 exports.add = async (req, res) =>{ //add exercise from add page
 	let day = req.params.day
 	updatePayload = []
