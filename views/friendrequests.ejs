@@ -3,7 +3,7 @@
 <%}%>
 <%- include('partials/messages'); %>
 <% newProfile.friendRequests.forEach(fr => { %>
-	<p><%= fr.requestUsername %></p>
+	<p><a href="/users/profile/<%= fr.requestUsername %>"><%= fr.requestUsername %></a></p>
 	<form action="/users/friendrequests/<%= fr.requestUsername %>" method="POST" class="d-inline">
 		<button type="submit" class="btn btn-danger" style="float: right;">Accept friend</button>
 	</form>

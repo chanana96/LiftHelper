@@ -36,7 +36,9 @@
 			<p>Request sent</p>
 		<% }%>
 		<% if (acceptfr == true) {%>
-			<p>accept</p>
+			<form action="/users/friendrequests/<%= foundUser.username %>" method="POST" class="d-inline">
+				<button type="submit" class="btn btn-danger" style="float: right;">Accept friend</button>
+			</form>
 		<% }%>
 		<% if (found == false && acceptfr == false && deletefr == false) {%>
 			<form action="/users/profile/<%= foundUser.username%>/addfriend?_method=POST" method="POST" class="d-inline">
@@ -81,6 +83,7 @@
 		<a href="/users/profile/<%= friend.friendUsername %>"><%= friend.friendUsername %></a>
 		
 <% }) %>
+<p><a href="/users/profile/<%= foundUser.username %>/recentposts">View recent posts</a></p>
 </p>
 </div>
 </div>

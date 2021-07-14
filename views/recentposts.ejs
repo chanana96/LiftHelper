@@ -1,0 +1,14 @@
+<% userposts.forEach(post => { %>
+	<div class="card mt-4">
+		<div class="card-body">
+	<h3><a href="/forum/<%= post.posts._id %>"><%= post.posts.postTitle %></a></h3>
+	<p><%= post.posts.postText %></p>
+	<% if (post.posts.likeCount == null) {%>
+		<p>0 likes</p>
+	<%} else {%>
+	<p><%= post.posts.likeCount %> likes</p>
+	<%}%>
+	<p><%= post.posts.date %></p>
+	</div>
+	</div>
+	<%})%>

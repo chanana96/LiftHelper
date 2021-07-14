@@ -66,11 +66,13 @@ router.get('/logout', (req, res)=>{
 //view and comment on profile, update bio, change password and upload profile picture
 router.get("/profile/:username", profileController.viewprofile);
 router.get('/profile/:username/update', profileController.updateprofile)
+router.get('/profile/:username/recentposts', profileController.viewrecentposts)
 router.post('/profile/:username/updatebio', profileController.updatebio)
 router.post('/profile/:username/comment', profileController.profilecomment)
 router.post('/profile/:username/:commentid/deletecomment', profileController.deleteprofilecomment)
 router.post('/changepassword', profileController.changepassword);
 router.post('/profile/:username/update', upload.single('image'), profileController.uploadprofilepicture)
+
 
 
 //send, accept and delete friend requests

@@ -24,7 +24,7 @@
 			<a href="/users/profile/<%= comment.author %>"><p><%= comment.author %></p></a>
 			<% if (login) { %>
 			<% if (comment.author == newProfile.username) { %>
-			<form action="/forum/<%= newPost.id %>/<%= comment.id %>/deletecomment?_method=POST" method="POST" class="d-inline">
+			<form action="/forum/<%= newPost.id %>/<%= comment.id %>/deletecomment?_method=DELETE" method="POST" class="d-inline">
 				<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
 			</form>
 			<% }%>

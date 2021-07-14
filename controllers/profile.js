@@ -111,3 +111,27 @@ exports.uploadprofilepicture = function(req, res){ //upload profile picture
 });
 	})
 }
+
+exports.viewrecentposts = async (req, res)=>{
+	res.render('recentposts', {
+	userposts: await User.aggregate([
+		{
+			$lookup: {
+				 from: "createposts", 
+				 localField: "username", 
+				 foreignField: "postUsername", 
+				 as: "posts"
+			}
+		},
+		{
+			$unwind: "$posts"
+		},
+		{
+			$match: {"posts.postUsername": req.params.username}
+		},
+		{
+			$sort: {"posts.date": -1}
+		} 
+		])}
+		)
+}
