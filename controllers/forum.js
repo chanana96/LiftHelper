@@ -2,22 +2,34 @@ const Createpost = require('../models/Createpost')
 const Vote = require('../models/Vote')
 const User = require('../models/User')
 
-exports.forumpage = async (req,res)=>res.render('forum', { //main forum page
-    newPost: await Createpost.aggregate([
-{
-    $lookup: {
-         from: "users", 
-         localField: "postUsername", 
-         foreignField: "username", 
-         as: "postUser"
-    }
-},
-{
-    $sort: {date: -1}
-}  
-]), login: req.isAuthenticated(), 
-newProfile: req.user
-})
+exports.forumpage = async (req,res)=>{
+	let newPost = await Createpost.aggregate([
+		{
+			$lookup: {
+				 from: "users", 
+				 localField: "postUsername", 
+				 foreignField: "username", 
+				 as: "postUser"
+			}
+		},
+		{
+			$sort: {date: -1}
+		}
+		])
+	let start = (req.params.start-1) * 7
+	let end = req.params.start * 7
+	let result = newPost.slice(start, end)
+	index = {}
+	if (end<newPost.length){
+	index.next = parseInt(req.params.start)+1
+	}
+	index.prev = parseInt(req.params.start)-1
+
+	res.render('forum', //main forum page
+{ newPost: result,
+     login: req.isAuthenticated(), 
+newProfile: req.user, index: index
+})}
 
 exports.createpost = async (req,res)=> { //create post
 	let newPost = await new Createpost({
@@ -37,7 +49,7 @@ exports.createpost = async (req,res)=> { //create post
 
 		try {
 			newPost = await newPost.save()
-			res.redirect(`/forum/${newPost.id}`)
+			res.redirect(`/forum/${newPost.id}/1`)
 		} catch (error){
 			console.log(error)
 			res.render('createpost', {newPost: newPost})
@@ -47,7 +59,7 @@ exports.createpost = async (req,res)=> { //create post
 
     try {
         newPost = await newPost.save()
-        res.redirect(`/forum/${newPost.id}`)
+        res.redirect(`/forum/view/${newPost.id}/1`)
     } catch (error){
         console.log(error)
         res.render('createpost', {newPost: newPost})
@@ -57,7 +69,15 @@ exports.createpost = async (req,res)=> { //create post
 
 exports.viewpost = async (req,res)=>{ //view post 
     const newPost = await Createpost.findById(req.params.id)
-    res.render('show', {comment: newPost.comments.sort((a, b) => b.commentDate - a.commentDate), newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
+	let start = (req.params.page-1) * 7
+	let end = req.params.page * 7
+	let result = newPost.comments.slice(start, end)
+	index = {}
+	if (end<newPost.comments.length){
+	index.next = parseInt(req.params.page)+1
+	}
+	index.prev = parseInt(req.params.page)-1
+    res.render('show', {comment: result.sort((a, b) => b.commentDate - a.commentDate), newPost: newPost, login: req.isAuthenticated(), newProfile: req.user})
 }
 
 exports.editpostui = async (req,res)=>res.render('editpost', {login: req.isAuthenticated(), newPost: await Createpost.findById(req.params.id), //edit post ui
@@ -71,7 +91,7 @@ exports.editpost = async function(req, res){ //edit post
         User.findById(req.user._id, function(err, user) {
             if (err) return next(err)
 			req.flash('success_msg', 'Post edited!')
-            return res.redirect('/forum'), {
+            return res.redirect('/forum/view/'+req.params.id+'/1'), {
 			}
 		});
 	})
@@ -82,7 +102,7 @@ exports.createpostui = (req,res)=>res.render('createpost', {login: req.isAuthent
 exports.deletepost = async (req,res) =>{ //delete post
     await Createpost.findByIdAndDelete(req.params.id)
 	req.flash('success_msg', 'Post deleted')
-    res.redirect('/forum')
+    res.redirect('back')
 }
 
 exports.postcomment = async function(req, res){ //comment on post
@@ -93,7 +113,7 @@ exports.postcomment = async function(req, res){ //comment on post
         User.findById(req.user._id, function(err, user) {
             if (err) return next(err)
 			req.flash('success_msg', 'Comment added')
-            return res.redirect('/forum/'+commentPost._id), {
+            return res.redirect('/forum/view/'+commentPost._id+'/1'), {
 			}
 		});
 	})
@@ -104,7 +124,7 @@ exports.deletecomment = async function(req, res){ //delete comment
         function (err, user) {
             if (err) return next(err)
 			req.flash('success_msg', 'Comment deleted')
-            return res.redirect('/forum/' + req.params.postid), {
+            return res.redirect('/forum/view/' + req.params.postid + '/1'), {
 			}
 		});
 }
@@ -121,11 +141,11 @@ exports.likepost = async (req,res) =>{ //like post
 
 	if (votes.length>0){
 		req.flash('error_msg', 'You already voted!')
-		res.redirect ('/forum')
+		res.redirect ('back')
 	}
 	else if (req.user.username == likePost.postUsername){
 		req.flash('error_msg', "You can't vote for your own post!")
-		res.redirect ('/forum')
+		res.redirect ('back')
 	}
 	else{
 	Createpost.updateOne({_id: likePost}, {$inc: {likeCount:1}}, 
@@ -135,7 +155,7 @@ exports.likepost = async (req,res) =>{ //like post
             if (err) return next(err)
 			voteInfo = voteInfo.save()
 			req.flash('success_msg', 'Post liked!')
-            return res.redirect('/forum'), {
+            return res.redirect('back'), {
 			}
 		});
 			})
@@ -154,11 +174,11 @@ exports.dislikepost = async (req,res) =>{ //dislike post
 
 	if (votes.length>0){
 		req.flash('error_msg', 'You already voted!')
-		res.redirect ('/forum')
+		res.redirect ('back')
 	}
 	else if (req.user.username == dislikePost.postUsername){
 		req.flash('error_msg', "You can't vote for your own post!")
-		res.redirect ('/forum')
+		res.redirect ('back')
 	}
 
 	else{
@@ -169,7 +189,7 @@ exports.dislikepost = async (req,res) =>{ //dislike post
             if (err) return next(err)
 			voteInfo = voteInfo.save()
 			req.flash('success_msg', 'Post disliked!')
-            return res.redirect('/forum'), {
+            return res.redirect('back'), {
 			}
 		});
 		})

@@ -14,7 +14,7 @@
 <%= newPost.postText %>
 <br>
 <%= newPost.date %>
-
+<%= comment.comments %>
 <div class="card mt-4">
 	<div class="card-body">
 		<%- include('partials/messages'); %>
@@ -59,16 +59,29 @@
 	<button type="submit" class="btn btn-primary btn-block">Submit</button>
 	</form>
 	</div>
+	<% if (index.prev) {%>
+		<a href="/forum/view/<%= newPost._id %>/<%= index.prev %>">Previous page: <%= index.prev %></a>
+		<%}%>
+		<% if (index.next) {%>
+		<a href="/forum/view/<%= newPost._id %>/<%= index.next %>">Next page: <%= index.next %></a>
+		<%}%>
 	</div>
 	</div>
 <% } else { %>
 	<div class="row mt-5">
 		<div class="col-md-10 m-auto">
+			
 		<div class="card card-body">
 			<h1 class="text-center mb-1"> <a href="/users/login">Log in to comment!</a>
 		</h1>
 	</form>
 	</div>
+	<% if (index.prev) {%>
+		<a href="/forum/view/<%= newPost._id %>/<%= index.prev %>">Previous page: <%= index.prev %></a>
+		<%}%>
+		<% if (index.next) {%>
+		<a href="/forum/view/<%= newPost._id %>/<%= index.next %>">Next page: <%= index.next %></a>
+		<%}%>
 	</div>
 	</div>
 <% }%>

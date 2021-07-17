@@ -37,7 +37,7 @@
             <div class="card-text mb-2">
                 <%= newPost.postText %>
             </div>
-            <a href="/forum/<%= newPost._id%>" class="btn btn-primary">Read more</a>
+            <a href="/forum/view/<%= newPost._id%>/1" class="btn btn-primary">Read more</a>
 			<% if (login) { %>
 				<% if (newPost.postUsername == newProfile.username) { %>
 					<a href="/editpost/<%= newPost._id%>"><button type="button" class="btn btn-info">Edit</button></a>
@@ -55,3 +55,10 @@
         </div>
     </div>
 <% }) %>
+
+<% if (index.prev) {%>
+<a href="/forum/<%= index.prev %>">Previous page: <%= index.prev %></a>
+<%}%>
+<% if (index.next) {%>
+<a href="/forum/<%= index.next %>">Next page: <%= index.next %></a>
+<%}%>

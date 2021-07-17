@@ -61,12 +61,12 @@ router.get('/dashboard', ensureAuthenticated, (req,res)=> {
 })
 
 //view forum, create, edit, delete, like/dislike posts and comment/delete on posts
-router.get('/forum', forumController.forumpage);
+router.get('/forum/:start', forumController.forumpage);
 router.get('/createpost', ensureAuthenticated, forumController.createpostui);
 router.post('/createpost', upload.single('media'), forumController.createpost)
 router.get('/editpost/:id', ensureAuthenticated, forumController.editpostui);
 router.post('/editpost/:id', forumController.editpost)
-router.get('/forum/:id', forumController.viewpost)
+router.get('/forum/view/:id/:page', forumController.viewpost)
 router.post('/forum/:id', forumController.deletepost)
 router.post('/forum/:id/comment', forumController.postcomment)
 router.post('/forum/:postid/:commentid/deletecomment', forumController.deletecomment)
