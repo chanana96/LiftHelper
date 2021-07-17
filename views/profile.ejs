@@ -83,6 +83,17 @@
 		<a href="/users/profile/<%= friend.friendUsername %>"><%= friend.friendUsername %></a>
 		
 <% }) %>
+<% if (foundUser.username !== matchingUser.username) {%>
+<p>Mutual friends: 
+<% foundUser.friends.forEach (friend => {%>
+	<% matchingUser.friends.forEach (mutual => {%>
+		<% if (friend.friendUsername == mutual.friendUsername) {%>
+			<a href="/users/profile/<%= friend.friendUsername %>"><%= friend.friendUsername %></a>
+		<% }%>
+	<% }) %>
+<% }) %>
+<% }%>
+		</p>
 <p><a href="/users/profile/<%= foundUser.username %>/recentposts">View recent posts</a></p>
 </p>
 </div>
