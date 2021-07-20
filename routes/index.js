@@ -55,6 +55,24 @@ router.get('/tdeecalculator', (req,res)=>res.render('tdeecalculator', {login: re
 router.get('/ibwcalculator', (req,res)=>res.render('ibwcalculator', {login: req.isAuthenticated(), newProfile: req.user}));
 router.get('/wilkscalculator', (req,res)=>res.render('wilkscalculator', {login: req.isAuthenticated(), newProfile: req.user}));
 
+router.post('/', (req, res) =>{ //search
+	results = [[],[]]
+	search = req.body.text
+	let exercises = {
+		"Barbell bench press": "/chest/barbellbenchpress", "Barbell squat": "/quadriceps/barbellsquat", "Incline bench press": "/chest/inclinebenchpress",
+		"Hanging leg raise": "/abs/hanginglegraise", "Bicep curls": "/biceps/bicepcurls", "Calf raises": "/calves/calfraises", "Overhead press": "/frontdeltoids/overheadpress",
+		"Shrugs": "/trapezius/shrugs"
+	}
+
+	for (exercise in exercises){
+		if (exercise.toUpperCase().includes(search.toUpperCase())){
+			results[0].push(exercise)
+			results[1].push(exercises[exercise])
+		}
+	}
+	res.render('results', {results: results, search: search, count: results[0].length})
+})
+
 
 router.get('/dashboard', ensureAuthenticated, (req,res)=> {
     res.render('dashboard', {login: req.isAuthenticated(), newProfile: req.user})

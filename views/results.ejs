@@ -1,0 +1,16 @@
+<p>You got <%= count %> results for <%= search %>.</p>
+
+<% let i=0 %>
+<% results[0].forEach (result => {%> 
+	<div>
+<a href="/muscles<%= results[1][i] %>"><%= result %></a>
+</div>
+	<% i++ %>
+<% }) %>
+
+
+
+
+<% if (results[0].length==0) {%>
+	<h1>Try again!</h1>
+<% }%>
