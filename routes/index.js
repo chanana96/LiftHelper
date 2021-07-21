@@ -50,12 +50,12 @@ router.use(async function(req, res, next){
 
 
 router.get('/', (req,res)=>res.render('homepage'));
-router.get('/onerepmaxcalculator', (req,res)=>res.render('onerepmaxcalculator', {login: req.isAuthenticated(), newProfile: req.user}));
-router.get('/tdeecalculator', (req,res)=>res.render('tdeecalculator', {login: req.isAuthenticated(), newProfile: req.user}));
-router.get('/ibwcalculator', (req,res)=>res.render('ibwcalculator', {login: req.isAuthenticated(), newProfile: req.user}));
-router.get('/wilkscalculator', (req,res)=>res.render('wilkscalculator', {login: req.isAuthenticated(), newProfile: req.user}));
+router.get('/onerepmaxcalculator', (req,res)=>res.render('onerepmaxcalculator'));
+router.get('/tdeecalculator', (req,res)=>res.render('tdeecalculator'));
+router.get('/ibwcalculator', (req,res)=>res.render('ibwcalculator'));
+router.get('/wilkscalculator', (req,res)=>res.render('wilkscalculator'));
 
-router.post('/', (req, res) =>{ //search
+router.post('/layout', (req, res) =>{ //search
 	results = [[],[]]
 	search = req.body.text
 	let exercises = {
@@ -75,7 +75,7 @@ router.post('/', (req, res) =>{ //search
 
 
 router.get('/dashboard', ensureAuthenticated, (req,res)=> {
-    res.render('dashboard', {login: req.isAuthenticated(), newProfile: req.user})
+    res.render('dashboard')
 })
 
 //view forum, create, edit, delete, like/dislike posts and comment/delete on posts

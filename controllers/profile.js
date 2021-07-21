@@ -112,9 +112,9 @@ exports.uploadprofilepicture = function(req, res){ //upload profile picture
 	})
 }
 
-exports.viewrecentposts = async (req, res)=>{
-	res.render('recentposts', {
-	userposts: await User.aggregate([
+exports.viewrecentposts = async (req, res)=>{ //show recent posts
+
+	let userposts = await User.aggregate([
 		{
 			$lookup: {
 				 from: "createposts", 
@@ -132,6 +132,17 @@ exports.viewrecentposts = async (req, res)=>{
 		{
 			$sort: {"posts.date": -1}
 		} 
-		])}
-		)
+		])
+	let start = (req.params.page-1) * 7
+	let end = req.params.page * 7
+	let result = userposts.slice(start, end)
+	index = {}
+	if (end<userposts.length){
+	index.next = parseInt(req.params.page)+1
+	}
+	index.prev = parseInt(req.params.page)-1
+
+	res.render('recentposts', {
+	userposts: result}
+	)
 }

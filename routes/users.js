@@ -52,9 +52,9 @@ router.use(async function(req, res, next){
 
 });
 
-router.get('/register', (req,res)=>res.render('register', {login: req.isAuthenticated()}))
-router.get('/login', (req,res)=>res.render('login', {login: req.isAuthenticated()}))
-router.get('/changepassword', (req,res)=>res.render('changepassword', {newProfile: req.user, login: req.isAuthenticated()}))
+router.get('/register', (req,res)=>res.render('register'))
+router.get('/login', (req,res)=>res.render('login'))
+router.get('/changepassword', (req,res)=>res.render('changepassword'))
 
 router.get('/logout', (req, res)=>{
 	req.logout();
@@ -66,7 +66,7 @@ router.get('/logout', (req, res)=>{
 //view and comment on profile, update bio, change password and upload profile picture
 router.get("/profile/:username", profileController.viewprofile);
 router.get('/profile/:username/update', profileController.updateprofile)
-router.get('/profile/:username/recentposts', profileController.viewrecentposts)
+router.get('/profile/:username/recentposts/:page', profileController.viewrecentposts)
 router.post('/profile/:username/updatebio', profileController.updatebio)
 router.post('/profile/:username/comment', profileController.profilecomment)
 router.post('/profile/:username/:commentid/deletecomment', profileController.deleteprofilecomment)

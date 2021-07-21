@@ -1,7 +1,7 @@
 <% userposts.forEach(post => { %>
 	<div class="card mt-4">
 		<div class="card-body">
-	<h3><a href="/forum/<%= post.posts._id %>"><%= post.posts.postTitle %></a></h3>
+	<h3><a href="/forum/view/<%= post.posts._id %>/1"><%= post.posts.postTitle %></a></h3>
 	<p><%= post.posts.postText %></p>
 	<% if (post.posts.likeCount == null) {%>
 		<p>0 likes</p>
@@ -12,3 +12,11 @@
 	</div>
 	</div>
 	<%})%>
+
+
+	<% if (index.prev) {%>
+		<a href="/users/profile/<%= userposts[0].username %>/recentposts/<%= index.prev %>">Previous page: <%= index.prev %></a>
+		<%}%>
+		<% if (index.next) {%>
+		<a href="/users/profile/<%= userposts[0].username %>/recentposts/<%= index.next %>">Next page: <%= index.next %></a>
+		<%}%>
