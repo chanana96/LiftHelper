@@ -1,28 +1,37 @@
-<%- include('../partials/messages'); %>
-<h3>Barbell Squat</h3>
-<p>The Barbell Squat is a fantastic compound exercise that targets your Quads and Glutes.</p>
-<% if (login) { %>
-<div>
-	<form action="/muscles/quadriceps/barbellsquat/" method="POST" class="d-inline">
-		<select name="day" id="day">
-			<option value="monday">Monday</option>
-			<option value="tuesday">Tuesday</option>
-			<option value="wednesday">Wednesday</option>
-			<option value="thursday">Thursday</option>
-			<option value="friday">Friday</option>
-			<option value="saturday">Saturday</option>
-			<option value="sunday">Sunday</option>
-		  </select>
-		<button type="submit" class="btn btn-danger">Add to routine</button>
-	</form>
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/quadriceps">Quadriceps</a> - Barbell Squat</h3>
+	<div class="m-auto">
+	<img src="https://hips.hearstapps.com/ame-prod-menshealth-assets.s3.amazonaws.com/main/assets/barbell-squat.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
 	</div>
-	<% }%>
-<img src="https://hips.hearstapps.com/ame-prod-menshealth-assets.s3.amazonaws.com/main/assets/barbell-squat.gif?resize=480:*" width="420" height="300">
-  <iframe width="420" height="300"
-  src="https://www.youtube.com/embed/Dy28eq2PjcM">
-  </iframe>
-<ol>
-	<li>Hold the bar behind you, resting it on your traps</li>
-	<li>With your back straight, squat down until parallel</li>
-	<li>Bring yourself up and repeat</li>
-</ol>
+	<div class="card-body">
+	  <p class="card-text">The Barbell Squat is a fantastic compound exercise that targets your Quads and Glutes.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Hold the bar behind you, resting it on your traps</li>
+	  <li class="list-group-item">2) With your back straight, squat down until parallel</li>
+	  <li class="list-group-item">3) Bring yourself up and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=Dy28eq2PjcM" target="_blank" class="card-link">"How to Perform the Squat - Proper Squats Form & Technique"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/quadriceps/barbellsquat/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+</div>

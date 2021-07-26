@@ -1,28 +1,37 @@
-<%- include('../partials/messages'); %>
-<h3>Shrugs</h3>
-<p>Shrugs are a great isolation exercise for hitting the traps.</p>
-<% if (login) { %>
-<div>
-	<form action="/muscles/trapezius/shrugs/" method="POST" class="d-inline">
-		<select name="day" id="day">
-			<option value="monday">Monday</option>
-			<option value="tuesday">Tuesday</option>
-			<option value="wednesday">Wednesday</option>
-			<option value="thursday">Thursday</option>
-			<option value="friday">Friday</option>
-			<option value="saturday">Saturday</option>
-			<option value="sunday">Sunday</option>
-		  </select>
-		<button type="submit" class="btn btn-danger">Add to routine</button>
-	</form>
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/trapezius">Traps</a> - Shrugs</h3>
+	<div class="m-auto">
+	<img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/workouts/2017/03/db-shrug-1489073548.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
 	</div>
-	<% }%>
-<img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/workouts/2017/03/db-shrug-1489073548.gif" width="420" height="300">
-  <iframe width="420" height="300"
-  src="https://www.youtube.com/embed/cJRVVxmytaM">
-  </iframe>
-<ol>
-	<li>Grab a dumbbell on each side, arch your back, keep your shoulder blades pinched</li>
-	<li>Elevate your shoulders up in a shrugging motion</li>
-	<li>Bring them down and repeat</li>
-</ol>
+	<div class="card-body">
+	  <p class="card-text">Shrugs are a great isolation exercise for hitting the traps.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Grab a dumbbell on each side, arch your back, keep your shoulder blades pinched</li>
+	  <li class="list-group-item">2) Elevate your shoulders up in a shrugging motion</li>
+	  <li class="list-group-item">3) Bring them down and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=cJRVVxmytaM" target="_blank" class="card-link">"How To: Dumbbell Shrugs"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/trapezius/shrugs/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+</div>

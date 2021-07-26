@@ -1,29 +1,38 @@
-<%- include('../partials/messages'); %>
-<h3>Incline bench press</h3>
-<p>The incline bench press can be used with dumbbells or barbells as an accessory exercise to complement your compound work. The higher you angle the bench, 
-	the more it works your shoulders.</p>
-	<% if (login) { %>
-	<div>
-		<form action="/muscles/chest/inclinebenchpress/" method="POST" class="d-inline">
-			<select name="day" id="day">
-				<option value="monday">Monday</option>
-				<option value="tuesday">Tuesday</option>
-				<option value="wednesday">Wednesday</option>
-				<option value="thursday">Thursday</option>
-				<option value="friday">Friday</option>
-				<option value="saturday">Saturday</option>
-				<option value="sunday">Sunday</option>
-			  </select>
-			<button type="submit" class="btn btn-danger">Add to routine</button>
-		</form>
-		</div>
-		<% }%>
-<img src="http://upl.stack.com/wp-content/uploads/2013/04/16143158/incline-bench-mistakes-3.gif">
-<iframe width="420" height="300"
-src="https://www.youtube.com/embed/DbFgADa2PL8">
-</iframe>
-<ol>
-  <li>Lay on the bench and arch your back</li>
-  <li>Grab the barbell and bring it down to your chest</li>
-  <li>Push it up and repeat</li>
-</ol>
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/chest">Chest</a> - Incline bench press</h3>
+	<div class="m-auto">
+	<img src="http://upl.stack.com/wp-content/uploads/2013/04/16143158/incline-bench-mistakes-3.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
+	</div>
+	<div class="card-body">
+	  <p class="card-text">The incline bench press can be used with dumbbells or barbells as an accessory exercise to complement your compound work. The higher you angle the bench, 
+		the more it works your shoulders.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Lay on the bench and arch your back</li>
+	  <li class="list-group-item">2) Grab the barbell and bring it down to your chest</li>
+	  <li class="list-group-item">3) Push it up and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=DbFgADa2PL8" target="_blank" class="card-link">"How To: Barbell Incline Chest Press"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/chest/inclinebenchpress/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+</div>
