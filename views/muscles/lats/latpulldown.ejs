@@ -1,0 +1,37 @@
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/lats">Lats</a> - Lat pulldown</h3>
+	<div class="m-auto">
+	<img src="https://global-uploads.webflow.com/5d1d0d3f53ced35a29dbe169/5ea30e7782e991a7e21fcd09_wide-grip-lat-pulldown-exercise-anabolic-aliens.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
+	</div>
+	<div class="card-body">
+	  <p class="card-text">The lat pulldown machine is a good accessory movement to target your lats.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Sit on the machine, make sure your legs are tightly secured</li>
+	  <li class="list-group-item">2) With your back straight and scapula retracted, bring the pulley down to your sternum</li>
+	  <li class="list-group-item">3) Bring it up and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=CAwf7n6Luuc" target="_blank" class="card-link">"How To: Lat Pulldown | 3 GOLDEN RULES"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/lats/latpulldown/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+  </div>

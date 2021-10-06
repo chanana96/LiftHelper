@@ -1,5 +1,88 @@
 const Routine = require('../models/Routine');
 
+//set premade routine to user routine
+exports.redditppl = async (req, res) =>{
+	try{
+	await Routine.updateOne( {routineUsername: req.user.username}, { $push: { ['monday']: {$each: [
+	{ exercise: "Deadlift", link: "lowerback/deadlift" }, 
+	{ exercise: "Lat pulldown", link: "lats/latpulldown"},
+	{ exercise: "Chest supported row", link: "lats/chestsupportedrow"},
+	{ exercise: "Face pulls", link: "reardeltoids/facepulls"},
+	{ exercise: "Bicep curls", link: "biceps/bicepcurls"},
+	{ exercise: "Hammer curls", link: "biceps/hammercurls"}
+]},
+['tuesday']: {$each: [
+	{ exercise: "Barbell bench press", link: "chest/barbellbenchpress"},
+	{ exercise: "Overhead press", link: "frontdeltoids/overheadpress"},
+	{ exercise: "Incline bench press", link: "chest/inclinebenchpress"},
+	{ exercise: "Tricep pushdown", link: "triceps/triceppushdown"},
+	{ exercise: "Tricep extensions", link: "triceps/tricepextensions"},
+	{ exercise: "Lateral raises", link: "frontdeltoids/lateralraises"},
+]},
+['wednesday']: {$each: [
+	{ exercise: "Barbell squat", link: "quadriceps/barbellsquat"},
+	{ exercise: "Romanian deadlift", link: "hamstrings/romaniandeadlift"},
+	{ exercise: "Leg press", link: "quadriceps/legpress"},
+	{ exercise: "Leg curls", link: "quadriceps/legcurls"},
+	{ exercise: "Calf raises", link: "calves/calfraises"},
+]},
+['thursday']: {$each: [
+	{ exercise: "Barbell row", link: "lats/barbellrow" }, 
+	{ exercise: "Lat pulldown", link: "lats/latpulldown"},
+	{ exercise: "Chest supported row", link: "lats/chestsupportedrow"},
+	{ exercise: "Face pulls", link: "reardeltoids/facepulls"},
+	{ exercise: "Bicep curls", link: "biceps/bicepcurls"},
+	{ exercise: "Hammer curls", link: "biceps/hammercurls"}
+]},
+['friday']: {$each: [
+	{ exercise: "Overhead press", link: "frontdeltoids/overheadpress"},
+	{ exercise: "Barbell bench press", link: "chest/barbellbenchpress"},
+	{ exercise: "Incline bench press", link: "chest/inclinebenchpress"},
+	{ exercise: "Tricep pushdown", link: "triceps/triceppushdown"},
+	{ exercise: "Tricep extensions", link: "triceps/tricepextensions"},
+	{ exercise: "Lateral raises", link: "frontdeltoids/lateralraises"},
+]},
+['saturday']: {$each: [
+	{ exercise: "Barbell squat", link: "quadriceps/barbellsquat"},
+	{ exercise: "Romanian deadlift", link: "hamstrings/romaniandeadlift"},
+	{ exercise: "Leg press", link: "quadriceps/legpress"},
+	{ exercise: "Leg curls", link: "quadriceps/legcurls"},
+	{ exercise: "Calf raises", link: "calves/calfraises"},
+]}
+ } } )
+	req.flash('success_msg', 'Routine added!')
+	res.redirect('/muscles/routines/redditppl')
+	}
+	catch(error){
+		console.log(error)
+	}	
+}
+
+exports.ftoforbeginners = async (req, res) =>{
+	try{
+	await Routine.updateOne( {routineUsername: req.user.username}, { $push: { ['monday']: {$each: [
+	{ exercise: "Barbell bench press", link: "chest/barbellbenchpress" }, 
+	{ exercise: "Barbell squat", link: "quadriceps/barbellsquat"},
+]},
+['wednesday']: {$each: [
+	{ exercise: "Deadlift", link: "lowerback/deadlift"},
+	{ exercise: "Overhead press", link: "frontdeltoids/overheadpress"},
+]},
+['friday']: {$each: [
+	{ exercise: "Barbell squat", link: "quadriceps/barbellsquat"},
+	{ exercise: "Barbell bench press", link: "chest/barbellbenchpress" }, 
+]}
+ } } )
+	req.flash('success_msg', 'Routine added!')
+	res.redirect('/muscles/routines/531forbeginners')
+	}
+	catch(error){
+		console.log(error)
+	}	
+}
+
+
+
 exports.addui = async (req, res) => //add routines page
 	res.render('muscles/routines/add', {login: req.isAuthenticated(), newProfile: req.user, day: req.params.day})
 
@@ -182,6 +265,7 @@ exports.shrugs = async (req, res) =>{
 }
 
 
+
 //exercise deletions
 exports.mondaydelete = async (req, res)=>{ 
 	try{
@@ -273,3 +357,4 @@ exports.sundaydelete = async (req, res)=>{
 	}
 
 }
+

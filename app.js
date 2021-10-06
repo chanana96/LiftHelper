@@ -6,7 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 const flash = require('connect-flash')
-const PORT = 5000;
+const PORT = process.env.port || 5000;
 
 app.use("/public", express.static(path.resolve(__dirname + '/public'))); //make the folder public
 

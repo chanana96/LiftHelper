@@ -15,9 +15,32 @@
 
 <h3>The routine</h3>
 
+<% if (login) { %>
+	<div>
+	<form action="/muscles/routines/531forbeginners/" method="POST" class="d-inline">
+		<button type="submit" class="btn btn-danger">Make this your routine</button>
+	</form>
+	</div>
+<% }%>
+
+
 <p>Monday</p>
 <ul>
 	<li><a href="/muscles/quadriceps/barbellsquat/">Barbell Squat</a></li>
 	<li><a href="/muscles/chest/barbellbenchpress">Barbell Bench Press</a></li>
+	
+</ul>
+
+<p>Wednesday</p>
+<ul>
+	<li><a href="/muscles/lowerback/deadlift/">Deadlift</a></li>
+	<li><a href="/muscles/frontdeltoids/overheadpress">Overhead press</a></li>
+	
+</ul>
+
+<p>Friday</p>
+<ul>
+	<li><a href="/muscles/chest/barbellbenchpress">Barbell Bench Press</a></li>
+	<li><a href="/muscles/quadriceps/barbellsquat/">Barbell Squat</a></li>
 	
 </ul>

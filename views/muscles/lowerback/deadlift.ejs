@@ -1,0 +1,37 @@
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/lowerback">Lower back</a> - Deadlift</h3>
+	<div class="m-auto">
+	<img src="https://media4.giphy.com/media/eIZXc5rF0K67nY5iPB/giphy.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
+	</div>
+	<div class="card-body">
+	  <p class="card-text">The deadlift is the most powerful compound movement. It targets an astounding number of muscles in your whole body, but it's mainly a back focused exercise.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Pull the barbell to your shins</li>
+	  <li class="list-group-item">2) Without rounding your back, bring the barbell up, keeping contact with your legs the whole time</li>
+	  <li class="list-group-item">3) Bring it down to the floor and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=wYREQkVtvEc" target="_blank" class="card-link">"How To Deadlift: Starting Strength 5 Step Deadlift"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/lowerback/deadlift/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+  </div>

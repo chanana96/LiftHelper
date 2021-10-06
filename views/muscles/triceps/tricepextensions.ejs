@@ -1,0 +1,37 @@
+<div class="card mb-3" style="margin-top: 20px;">
+	<%- include('../partials/messages'); %>
+	<h3 class="card-header"><a href="/muscles/triceps">Triceps</a> - Tricep extensions</h3>
+	<div class="m-auto">
+	<img src="https://i1.wp.com/media.giphy.com/media/1zhszhFAu88C0mjJWR/giphy.gif"
+	 width="420" height="300" style="margin-top: 20px;" >
+	</div>
+	<div class="card-body">
+	  <p class="card-text">Tricep extensions are an isolation exercise for the triceps, typically used with a dumbbell.</p>
+	</div>
+	<ul class="list-group list-group-flush">
+	  <li class="list-group-item">1) Grab a dumbbell and hold it up behind your head</li>
+	  <li class="list-group-item">2) Bring the dumbbell up</li>
+	  <li class="list-group-item">3) Bring it down and repeat</li>
+	</ul>
+	<div class="card-body">
+	  <a href="https://www.youtube.com/watch?v=-Vyt2QdsR7E" target="_blank" class="card-link">"How To: Standing Overhead Dumbbell Tricep Extension"</a>
+	</div>
+	<div class="card-footer">
+		<% if (login) { %>
+			<div>
+			<form action="/muscles/triceps/tricepextensions/" method="POST" class="d-inline">
+				<select name="day" id="day">
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thursday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+					<option value="sunday">Sunday</option>
+				  </select>
+				<button type="submit" class="btn btn-danger">Add to routine</button>
+			</form>
+			</div>
+			<% }%>
+	</div>
+</div>
