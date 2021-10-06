@@ -157,6 +157,36 @@ exports.add = async (req, res) =>{ //add exercise from add page
 	if (req.body.squats){
 		updatePayload.push({exercise: req.body.squats.split(',')[0], link: req.body.squats.split(',')[1]})
 	}
+	if (req.body.hammercurls){
+		updatePayload.push({exercise: req.body.hammercurls.split(',')[0], link: req.body.hammercurls.split(',')[1]})
+	}
+	if (req.body.lateralraises){
+		updatePayload.push({exercise: req.body.lateralraises.split(',')[0], link: req.body.lateralraises.split(',')[1]})
+	}
+	if (req.body.romaniandeadlift){
+		updatePayload.push({exercise: req.body.romaniandeadlift.split(',')[0], link: req.body.romaniandeadlift.split(',')[1]})
+	}
+	if (req.body.barbellrow){
+		updatePayload.push({exercise: req.body.barbellrow.split(',')[0], link: req.body.barbellrow.split(',')[1]})
+	}
+	if (req.body.chestsupportedrow){
+		updatePayload.push({exercise: req.body.chestsupportedrow.split(',')[0], link: req.body.chestsupportedrow.split(',')[1]})
+	}
+	if (req.body.latpulldown){
+		updatePayload.push({exercise: req.body.latpulldown.split(',')[0], link: req.body.latpulldown.split(',')[1]})
+	}
+	if (req.body.deadlift){
+		updatePayload.push({exercise: req.body.deadlift.split(',')[0], link: req.body.deadlift.split(',')[1]})
+	}
+	if (req.body.legcurls){
+		updatePayload.push({exercise: req.body.legcurls.split(',')[0], link: req.body.legcurls.split(',')[1]})
+	}
+	if (req.body.legpress){
+		updatePayload.push({exercise: req.body.legpress.split(',')[0], link: req.body.legpress.split(',')[1]})
+	}
+	if (req.body.facepulls){
+		updatePayload.push({exercise: req.body.facepulls.split(',')[0], link: req.body.facepulls.split(',')[1]})
+	}
 	try{
 	await Routine.updateOne( {routineUsername: req.user.username}, { $push: { [day]: {$each: updatePayload} } } )
 	req.flash('success_msg', 'Exercise added to routine!')

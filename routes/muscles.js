@@ -77,6 +77,10 @@ router.post('/routines/531forbeginners/', exercisesController.ftoforbeginners)
 router.get('/routines/routines', (req, res)=>res.render('muscles/routines/routines'));
 router.get('/routines/531forbeginners', (req, res)=>res.render('muscles/routines/531forbeginners'));
 router.get('/routines/redditppl', (req, res)=>res.render('muscles/routines/redditppl'));
+router.get('/routines/arnoldsplit', (req, res)=>res.render('muscles/routines/arnoldsplit'));
+router.get('/routines/nsuns', (req, res)=>res.render('muscles/routines/nsuns'));
+router.get('/routines/phat', (req, res)=>res.render('muscles/routines/phat'));
+
 
 //personalized routines system
 router.get('/routines/:username/:day', exercisesController.addui) // add exercise(s) on x day ui
