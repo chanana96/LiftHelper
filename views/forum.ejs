@@ -12,7 +12,7 @@
 			<% }%>
             <h4 class="card-title"><%= newPost.postTitle %></h4>
 				<% if (newPost.image) {%>
-					<img width="145" height="100" src="/public/uploads/images/<%= newPost.image %>" >
+					<img width="145" height="100" src="https://lifthelperbucket.s3.amazonaws.com/<%= newPost.image %>" >
 					<% } if (newPost.media) { %>
 						<video width="145" height="100" controls>
 							<source src="/public/uploads/images/<%= newPost.media %>" type="video/mp4">
@@ -24,14 +24,21 @@
 					<br>
 			<% if (newPost.postUser[0].total && newPost.postUser[0].weight && newPost.postUser[0].wilks) { %>
 				<a href="/users/profile/<%= newPost.postUsername %>">
-				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px"><p> <%= newPost.postUsername %></a>
-				 - Total: <%= newPost.postUser[0].total %> at <%= newPost.postUser[0].weight %> KG - Wilks score of <%= newPost.postUser[0].wilks %></p>
+				<%if (newPost.postUser[0].img != null) { %>
+				<img src="https://lifthelperbucket.s3.amazonaws.com/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px"><p>
+					<% } else { %>
+						<img src="https://lifthelperbucket.s3.amazonaws.com/placeholder.png" width="55" height="55" style="border:2px solid black">
+					<% }%> 
+					<%= newPost.postUsername %></a> - Total: <%= newPost.postUser[0].total %> at <%= newPost.postUser[0].weight %> KG - Wilks score of <%= newPost.postUser[0].wilks %></p>
 			<% } else { %>
 				<a href="/users/profile/<%= newPost.postUsername %>">
-				<img src="/public/uploads/images/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px">
+				<%if (newPost.postUser[0].img != null) { %>
+					<img src="https://lifthelperbucket.s3.amazonaws.com/<%= newPost.postUser[0].img %>" width="55" height="55" style="border-radius: 10px">
+				<% } else { %>
+					<img src="https://lifthelperbucket.s3.amazonaws.com/placeholder.png" width="55" height="55" style="border:2px solid black">
+				<% }%>
 				<p><%= newPost.postUsername %></a> - This user does not have a total, weight and wilks score set</p>
 			<% }%>
-
             <div class="card-subtitle text-muted mb-2">
                 <%= newPost.date.toLocaleDateString() %>
             </div>

@@ -47,7 +47,7 @@
 		  <ul class="nav navbar-nav ml-auto">
 			<% if (login) { %>
 				<%if (newProfile.img != null) { %>
-				<img src="/public/uploads/images/<%= newProfile.img %>" width="55" height="55" style="border-radius: 10px">
+				<img src="https://lifthelperbucket.s3.amazonaws.com/<%= newProfile.img %>" width="55" height="55" style="border-radius: 10px">
 				<li class="nav-item">	
 					<a class="nav-link" href="/users/profile/<%= newProfile.username%>"><span class="fas fa-user"></span> Profile</a>
 				</li>
@@ -61,7 +61,7 @@
 					<a class="nav-link" href="/users/logout"><span class="fas fa-sign-in-alt"></span> Logout</a>
 				</li>
 				<% } else { %>
-					<img src="/public/uploads/images/placeholder.png" width="55" height="55" style="border-radius: 10px">
+					<img src="https://lifthelperbucket.s3.amazonaws.com/placeholder.png" width="55" height="55" style="border-radius: 10px">
 					<li class="nav-item">	
 						<a class="nav-link" href="/users/profile/<%= newProfile.username%>"><span class="fas fa-user"></span> Profile</a>
 					</li>

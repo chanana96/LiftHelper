@@ -1,7 +1,7 @@
 <h1><%= newPost.postTitle %></h1>
 <p>Posted by <%= newPost.postUsername %> </p>
 <% if (newPost.image) {%>
-	<img width="320" height="240" src="/public/uploads/images/<%= newPost.image %>" >
+	<img width="320" height="240" src="https://lifthelperbucket.s3.amazonaws.com/<%= newPost.image %>" >
 <% } if (newPost.media) { %>
 	<video width="320" height="240" controls>
 		<source src="/public/uploads/images/<%= newPost.media %>" type="video/mp4">

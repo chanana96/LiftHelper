@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {ensureAuthenticated} = require('../config/auth');
 const User = require('../models/User');
-const Createpost = require('../models/Createpost');
-const Vote = require('../models/Vote');
 const multer = require('multer')
 const forumController = require('../controllers/forum')
+require('dotenv').config()
 
 const storage = multer.diskStorage({
 	destination: function(request, file, callback){
@@ -16,6 +15,7 @@ const storage = multer.diskStorage({
 		callback(null, Date.now() + file.originalname)
 	}
 })
+
 
 const upload = multer({
 	storage: storage,

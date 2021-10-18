@@ -1,6 +1,8 @@
 const User = require('../models/User')
 const Routine = require('../models/Routine')
 const bcrypt = require('bcryptjs');
+require('dotenv').config()
+const { uploadFile } = require('../config/s3')
 
 exports.viewprofile = async function (req, res){ //viewing your profile
 	await User.findOne({
@@ -98,9 +100,9 @@ exports.changepassword = async (req, res)=>{ //changing your password
 	}
 }
 
-exports.uploadprofilepicture = function(req, res){ //upload profile picture
+exports.uploadprofilepicture = async function(req, res){ //upload profile picture
 	User.updateOne({email: req.user.email}, 
-		{$set: {img: req.file.filename}}, 
+		{$set: {img: req.file.filename}}, await uploadFile(req.file),
 		function (err, user){
         if (err) return next(err);
         User.findById(req.user._id, function(err, user) {

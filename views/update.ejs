@@ -1,4 +1,8 @@
-<img src="/public/uploads/images/<%= newProfile.img %>" width="125" height="125" style="border:2px solid black">
+<%if (newProfile.img != null) { %>
+<img src="https://lifthelperbucket.s3.amazonaws.com/<%= newProfile.img %>" width="125" height="125" style="border:2px solid black">
+<% } else { %>
+<img src="https://lifthelperbucket.s3.amazonaws.com/placeholder.png" width="125" height="125" style="border:2px solid black">
+<% }%>
 <form action="/users/profile/<%= newProfile.username %>/update" method="POST" enctype="multipart/form-data">
 	<label for="image">Upload a profile picture</label>
 	<input type="file" name="image" id="image" class="form-control-file"> <button type="submit" class="btn-primary btn-sm">Upload</button>

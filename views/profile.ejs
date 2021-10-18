@@ -6,9 +6,9 @@
 		<h1 class="text-center mb-3"><%= foundUser.username %></h1>
 		<%- include('partials/messages'); %>
 	<%if (foundUser.img != null) { %>
-		<img src="/public/uploads/images/<%= foundUser.img %>" width="125" height="125" style="border:2px solid black">
+		<img src="https://lifthelperbucket.s3.amazonaws.com/<%= foundUser.img %>" width="125" height="125" style="border:2px solid black">
 	<% } else { %>
-		<img src="/public/uploads/images/placeholder.png" width="125" height="125" style="border:2px solid black">
+		<img src="https://lifthelperbucket.s3.amazonaws.com/placeholder.png" width="125" height="125" style="border:2px solid black">
 	<% }%>
 <br>
 <% if (login) {%>

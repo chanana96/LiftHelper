@@ -1,6 +1,9 @@
 const Createpost = require('../models/Createpost')
 const Vote = require('../models/Vote')
 const User = require('../models/User')
+require('dotenv').config()
+const { uploadFile } = require('../config/s3')
+
 
 exports.forumpage = async (req,res)=>{
 	let newPost = await Createpost.aggregate([
@@ -48,8 +51,9 @@ exports.createpost = async (req,res)=> { //create post
 		}
 
 		try {
+			await uploadFile(req.file)
 			newPost = await newPost.save()
-			res.redirect(`/forum/${newPost.id}/1`)
+			res.redirect(`/forum/view/${newPost.id}/1`)
 		} catch (error){
 			console.log(error)
 			res.render('createpost', {newPost: newPost})
