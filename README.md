@@ -12,7 +12,7 @@ A personal project I made to help people who want to get into fitness, especiall
 * Send friend requests, send messages, see mutual friends and comment on other profiles
 
 ## Built with
-* Node.js
-* Express.js
-* Mongo.db
+* [Node.js](https://nodejs.org/en/)
+* [Express.js](https://expressjs.com/)
+* [Mongo.db](https://www.mongodb.com/)
 
