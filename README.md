@@ -1,7 +1,7 @@
 # LiftHelper
 A personal project I made to help people who want to get into fitness, especially weightlifting.
 
-[Click here](https://lifthelper-nodejs.herokuapp.com/) to check the project out
+[Click here](https://lifthelper.onrender.com/) to check the project out
 
 ## Features
 * Easily sort through muscle groups by simply clicking the desired body part on the homepage
